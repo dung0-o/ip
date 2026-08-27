@@ -15,7 +15,7 @@ public class Dook {
                                                ░        ░ ░      ░ ░  ░  ░   
                                              ░                               
                                         """;
-    public static final String BAR = "_".repeat(48) + "\n";
+    public static final String BAR = "\n" + "_".repeat(48) + "\n";
     public static final String[] GREETINGS = {
         "The shadows just got a little colder.",
         "You should not have opened this chat.",
@@ -23,16 +23,21 @@ public class Dook {
     };
 
     public static void printDookMsg(String msg) {
-        System.out.print(BAR + msg + "\n\n> ");
+        System.out.print("\n" + msg + BAR + "\n> ");
     }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Random random = new Random();
 
-        System.out.println(BANNER);
+        System.out.print(BANNER);
         printDookMsg("I am Dook.\n" + GREETINGS[random.nextInt(GREETINGS.length)]);
-        in.nextLine();
-        System.out.println(BAR + "Goodbye for now.");
+
+        String userQuery = in.nextLine();
+        while (!userQuery.equals("bye")) {
+            printDookMsg(userQuery);
+            userQuery = in.nextLine();
+        }
+        System.out.println("\nGoodbye for now.");
     }
 }
