@@ -2,7 +2,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ToDoTask extends Task {
-    private static final Pattern PATTERN = Pattern.compile("^todo\\s([\\w\\d]+(\\s+[\\w\\d]+)*)$");
+    private static final Pattern PATTERN = Pattern.compile("^todo\\s(\\w+(\\s+\\w+)*)$");
 
     public ToDoTask(String description) {
         super(description);

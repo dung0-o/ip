@@ -3,7 +3,8 @@ import java.util.regex.Matcher;
 
 public class EventTask extends Task {
     private static final Pattern PATTERN =
-            Pattern.compile("^event\\s([\\w\\d]+(\\s+[\\w\\d]+)*)\\s/from\\s([\\w\\d]+(\\s+[\\w\\d]+)*)\\s/to\\s([\\w\\d]+(\\s+[\\w\\d]+)*)$");
+            Pattern.compile("^event%1$s\\s/from%1$s\\s/to%1$s$"
+                                    .formatted("\\s(\\w+(\\s+\\w+)*)"));
     private String startDatetime;
     private String endDatetime;
 

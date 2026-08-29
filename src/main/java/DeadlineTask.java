@@ -3,7 +3,8 @@ import java.util.regex.Matcher;
 
 public class DeadlineTask extends Task {
     private static final Pattern PATTERN =
-            Pattern.compile("^deadline\\s([\\w\\d]+(\\s+[\\w\\d]+)*)\\s/by\\s([\\w\\d]+(\\s+[\\w\\d]+)*)$");
+            Pattern.compile("^deadline%1$s\\s/by%1$s$"
+                                    .formatted("\\s(\\w+(\\s+\\w+)*)"));
     private String deadline;
 
     public DeadlineTask(String description, String deadline) {
