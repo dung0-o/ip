@@ -3,9 +3,21 @@ import java.util.List;
 
 public class TaskManager {
     private List<Task> tasks = new ArrayList<>();
+    private Task[] taskTypes = {
+        new ToDoTask(),
+        new DeadlineTask(),
+        new EventTask()
+    };
 
-    public void addTask(String description) {
-        tasks.add(new Task(description));
+    public Task addTask(String userQuery) {
+        for (Task taskType : taskTypes) {
+            Task newTask = taskType.getNewTask(userQuery);
+            if (newTask != null) {
+                tasks.add(newTask);
+                return newTask;
+            }
+        }
+        return null;
     }
 
     public Task getTask(int id) {
@@ -21,11 +33,16 @@ public class TaskManager {
 
     public String listTasks() {
         String format = "%" + (tasks.size() / 10 + 1) + "d.";
-        String msg = String.format(format, 1) + tasks.get(0);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(format, 1))
+          .append(tasks.get(0));
+
         for (int i = 1; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            msg += "\n" + String.format(format, i+1) + task;
+            sb.append("\n")
+              .append(String.format(format, i+1))
+              .append(tasks.get(i));
         }
-        return msg;
+        return sb.toString();
     }
 }

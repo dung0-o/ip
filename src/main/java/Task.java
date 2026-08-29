@@ -1,4 +1,6 @@
-public class Task {
+import java.util.regex.Matcher;
+
+public abstract class Task {
     private String description;
     private boolean isDone;
 
@@ -17,6 +19,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + (isDone ? "X" : " ") + "] " + description;
+        return "[%s] %s".formatted(isDone ? "X" : " ", description);
     }
+
+    public abstract Task getNewTask(String userQuery);
 }

@@ -9,7 +9,7 @@ public class CommandManager {
     public CommandManager(TaskManager taskManager) {
         this.taskManager = taskManager;
         commands = new ArrayList<Command>();
-        commands.add(new GreetingCommand(taskManager));
+        commands.add(new GreetCommand(taskManager));
         commands.add(new ExitCommand(taskManager));
         commands.add(new EmptyCommand(taskManager));
         commands.add(new ListCommand(taskManager));

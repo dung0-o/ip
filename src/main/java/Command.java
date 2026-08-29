@@ -2,9 +2,9 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public abstract class Command {
-    private final String BAR = "\n" + "_".repeat(60) + "\n";
+    private final String BAR = "_".repeat(60);
     protected TaskManager taskManager;
-    protected Pattern pattern;
+    private Pattern pattern;
 
     public Command(TaskManager taskManager, Pattern pattern) {
         this.taskManager = taskManager;
@@ -16,11 +16,11 @@ public abstract class Command {
     }
 
     protected void printReply(String msg) {
-        System.out.print("\n" + msg + BAR + "\n> ");
+        System.out.print("\n%s\n%s\n\n> ".formatted(msg, BAR));
     }
 
     protected void printReply(String msg, Task task) {
-        System.out.print("\n" + msg + "\n  " + task + BAR + "\n> ");
+        System.out.print("\n%s\n  %s\n%s\n\n> ".formatted(msg, task, BAR));
     }
 
     public abstract void execute(Matcher matcher);

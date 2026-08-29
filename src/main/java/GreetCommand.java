@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class GreetingCommand extends Command {
+public class GreetCommand extends Command {
     private final String BANNER =   """
                                         ▓█████▄  ▒█████   ▒█████   ██ ▄█▀
                                         ▒██▀ ██▌▒██▒  ██▒▒██▒  ██▒ ██▄█▒
@@ -22,12 +22,13 @@ public class GreetingCommand extends Command {
     };
     private final Random RANDOM = new Random();
 
-    public GreetingCommand(TaskManager taskManager) {
+    public GreetCommand(TaskManager taskManager) {
         super(taskManager, Pattern.compile("^\\s+$"));
     }
 
     @Override
     public void execute(Matcher matcher) {
-        printReply(BANNER + "\nI am Dook.\n" + GREETINGS[RANDOM.nextInt(GREETINGS.length)]);
+        String greeting = GREETINGS[RANDOM.nextInt(GREETINGS.length)];
+        printReply("%s\nI am Dook.\n%s".formatted(BANNER, greeting));
     }
 }

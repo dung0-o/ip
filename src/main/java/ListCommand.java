@@ -11,7 +11,7 @@ public class ListCommand extends Command {
         if (!taskManager.isEmpty()) {
             printReply(taskManager.listTasks());
         } else {
-            printReply("You are alone in the darkness.");
+            printReply("You are alone in this darkness.");
         }
     }
 }

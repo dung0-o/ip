@@ -8,8 +8,11 @@ public class AddCommand extends Command {
 
     @Override
     public void execute(Matcher matcher) {
-        String userQuery = matcher.group();
-        taskManager.addTask(userQuery);
-        printReply("Scratched into the ledger: " + userQuery);
+        Task newTask = taskManager.addTask(matcher.group());
+        if (newTask != null) {
+            printReply("Scratched into the ledger:", newTask);
+        } else {
+            printReply("You shout gibberish at the void. It stares back.");
+        }
     }
 }
