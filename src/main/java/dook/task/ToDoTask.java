@@ -1,8 +1,10 @@
+package dook.task;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ToDoTask extends Task {
-    private static final Pattern PATTERN = Pattern.compile("^todo\\s(\\w+(\\s+\\w+)*)$");
+    private static final Pattern PATTERN = Pattern.compile("^todo\\s(.+)$");
 
     public ToDoTask(String description) {
         super(description);

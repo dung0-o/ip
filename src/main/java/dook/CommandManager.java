@@ -1,6 +1,17 @@
+package dook;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
+
+import dook.command.Command;
+import dook.command.AddCommand;
+import dook.command.EmptyCommand;
+import dook.command.ExitCommand;
+import dook.command.GreetCommand;
+import dook.command.ListCommand;
+import dook.command.MarkCommand;
+import dook.command.UnmarkCommand;
 
 public class CommandManager {
     private List<Command> commands;

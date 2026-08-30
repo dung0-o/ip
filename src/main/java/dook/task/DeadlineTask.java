@@ -1,10 +1,10 @@
+package dook.task;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class DeadlineTask extends Task {
-    private static final Pattern PATTERN =
-            Pattern.compile("^deadline%1$s\\s/by%1$s$"
-                                    .formatted("\\s(\\w+(\\s+\\w+)*)"));
+    private static final Pattern PATTERN = Pattern.compile("^deadline\\s(.+)\\s/by\\s(.+)$");
     private String deadline;
 
     public DeadlineTask(String description, String deadline) {
@@ -25,7 +25,7 @@ public class DeadlineTask extends Task {
     public Task getNewTask(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (matcher.matches()) {
-            return new DeadlineTask(matcher.group(1), matcher.group(3));
+            return new DeadlineTask(matcher.group(1), matcher.group(2));
         } else {
             return null;
         }

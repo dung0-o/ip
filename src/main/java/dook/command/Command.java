@@ -1,5 +1,10 @@
+package dook.command;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import dook.TaskManager;
+import dook.task.Task;
 
 public abstract class Command {
     private final String BAR = "_".repeat(60);

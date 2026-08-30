@@ -1,3 +1,5 @@
+package dook;
+
 import java.util.Scanner;
 
 public class Dook {

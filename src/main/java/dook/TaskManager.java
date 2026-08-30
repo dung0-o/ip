@@ -1,5 +1,12 @@
+package dook;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import dook.task.Task;
+import dook.task.DeadlineTask;
+import dook.task.EventTask;
+import dook.task.ToDoTask;
 
 public class TaskManager {
     private List<Task> tasks = new ArrayList<>();

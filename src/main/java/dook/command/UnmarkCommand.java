@@ -1,5 +1,10 @@
+package dook.command;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import dook.TaskManager;
+import dook.task.Task;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(TaskManager taskManager) {

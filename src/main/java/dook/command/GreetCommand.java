@@ -1,6 +1,10 @@
+package dook.command;
+
 import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import dook.TaskManager;
 
 public class GreetCommand extends Command {
     private final String BANNER =   """
