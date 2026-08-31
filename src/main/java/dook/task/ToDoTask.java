@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 public class ToDoTask extends Task {
-    private static final Pattern PATTERN = Pattern.compile("^todo\\s(.+)$");
+    private static final Pattern PATTERN = Pattern.compile("^todo\\s+(\\S+(\\s+\\S+)*)$");
 
     public ToDoTask(String description) {
         super(description);

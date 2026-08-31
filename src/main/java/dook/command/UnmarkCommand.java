@@ -8,7 +8,7 @@ import dook.task.Task;
 
 public class UnmarkCommand extends Command {
     public UnmarkCommand(TaskManager taskManager) {
-        super(taskManager, Pattern.compile("^unmark\\s(\\d+)$"));
+        super(taskManager, Pattern.compile("^unmark\\s+(\\d+)$"));
     }
 
     @Override

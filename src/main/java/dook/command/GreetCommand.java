@@ -33,6 +33,6 @@ public class GreetCommand extends Command {
     @Override
     public void execute(Matcher matcher) {
         String greeting = GREETINGS[RANDOM.nextInt(GREETINGS.length)];
-        printReply("%s\nI am Dook.\n%s".formatted(BANNER, greeting));
+        printReply(BANNER + "\nI am Dook.\n" + greeting);
     }
 }

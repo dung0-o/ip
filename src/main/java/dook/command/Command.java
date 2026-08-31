@@ -21,11 +21,11 @@ public abstract class Command {
     }
 
     protected void printReply(String msg) {
-        System.out.print("\n%s\n%s\n\n> ".formatted(msg, BAR));
+        System.out.print("\n" + msg + "\n" + BAR + "\n\n> ");
     }
 
     protected void printReply(String msg, Task task) {
-        System.out.print("\n%s\n  %s\n%s\n\n> ".formatted(msg, task, BAR));
+        System.out.print("\n" + msg + "\n  " + task + "\n" + BAR + "\n\n> ");
     }
 
     public abstract void execute(Matcher matcher);

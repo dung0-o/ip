@@ -8,7 +8,7 @@ import dook.task.Task;
 
 public class MarkCommand extends Command {
     public MarkCommand(TaskManager taskManager) {
-        super(taskManager, Pattern.compile("^mark\\s(\\d+)$"));
+        super(taskManager, Pattern.compile("^mark\\s+(\\d+)$"));
     }
 
     @Override
