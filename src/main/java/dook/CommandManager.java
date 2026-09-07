@@ -11,6 +11,7 @@ import dook.command.EmptyCommand;
 import dook.command.ErrorCommand;
 import dook.command.ExitCommand;
 import dook.command.GreetCommand;
+import dook.command.HelpCommand;
 import dook.command.ListCommand;
 import dook.command.MarkCommand;
 import dook.command.UnmarkCommand;
@@ -31,6 +32,7 @@ public class CommandManager {
         commands.add(new MarkCommand(taskManager));
         commands.add(new UnmarkCommand(taskManager));
         commands.add(new ErrorCommand(taskManager));
+        commands.add(new HelpCommand(taskManager));
         commands.add(new AddTaskCommand(taskManager));
     }
 
