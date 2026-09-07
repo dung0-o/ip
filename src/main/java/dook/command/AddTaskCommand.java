@@ -1,0 +1,19 @@
+package dook.command;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+import dook.TaskManager;
+import dook.task.Task;
+
+public class AddTaskCommand extends Command {
+    public AddTaskCommand(TaskManager taskManager) {
+        super(taskManager, Pattern.compile(".+"));
+    }
+
+    @Override
+    public Response execute(Matcher matcher) {
+        Task newTask = taskManager.addTask(matcher.group());
+        return new Response("Scratched into the ledger:", newTask);
+    }
+}

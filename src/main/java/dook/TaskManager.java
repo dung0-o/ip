@@ -8,6 +8,10 @@ import dook.task.DeadlineTask;
 import dook.task.EventTask;
 import dook.task.ToDoTask;
 
+import dook.exception.UnknownTaskException;
+import dook.exception.EmptyTaskListException;
+import dook.exception.TaskListIndexOutOfBoundsException;
+
 public class TaskManager {
     private List<Task> tasks = new ArrayList<>();
     private Task[] taskTypes = {
@@ -24,21 +28,22 @@ public class TaskManager {
                 return newTask;
             }
         }
-        return null;
+        throw new UnknownTaskException();
     }
 
     public Task getTask(int id) {
-        if (id >= 0 && id < tasks.size()) {
+        try {
             return tasks.get(id);
+        } catch (IndexOutOfBoundsException e) {
+            throw new TaskListIndexOutOfBoundsException();
         }
-        return null;
-    }
-
-    public boolean isEmpty() {
-        return tasks.size() == 0;
     }
 
     public String listTasks() {
+        if (tasks.isEmpty()) {
+            throw new EmptyTaskListException();
+        }
+
         String format = "%" + (tasks.size() / 10 + 1) + "d.";
 
         StringBuilder sb = new StringBuilder();

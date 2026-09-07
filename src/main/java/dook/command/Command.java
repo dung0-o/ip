@@ -7,7 +7,6 @@ import dook.TaskManager;
 import dook.task.Task;
 
 public abstract class Command {
-    private final String BAR = "_".repeat(60);
     protected TaskManager taskManager;
     private Pattern pattern;
 
@@ -20,13 +19,5 @@ public abstract class Command {
         return pattern;
     }
 
-    protected void printReply(String msg) {
-        System.out.print("\n" + msg + "\n" + BAR + "\n\n> ");
-    }
-
-    protected void printReply(String msg, Task task) {
-        System.out.print("\n" + msg + "\n  " + task + "\n" + BAR + "\n\n> ");
-    }
-
-    public abstract void execute(Matcher matcher);
+    public abstract Response execute(Matcher matcher);
 }
