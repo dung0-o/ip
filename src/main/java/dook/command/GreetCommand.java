@@ -25,15 +25,14 @@ public class GreetCommand extends Command {
         "You should not have opened this chat.",
         "Are you alone in the room right now?"
     };
-    private final Random RANDOM = new Random();
 
-    public GreetCommand(TaskManager taskManager) {
-        super(taskManager, Pattern.compile("^\\s+$"));
+    public GreetCommand(TaskManager taskManager, Random random) {
+        super(taskManager, random, Pattern.compile("^\\s+$"));
     }
 
     @Override
     public Response execute(Matcher matcher) {
-        String greeting = GREETINGS[RANDOM.nextInt(GREETINGS.length)];
+        String greeting = GREETINGS[random.nextInt(GREETINGS.length)];
         return new Response(BANNER + "\nI am Dook.\n" + greeting);
     }
 }
