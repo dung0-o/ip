@@ -1,5 +1,6 @@
 package dook.command;
 
+import java.util.Random;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -26,12 +27,11 @@ public class HelpCommand extends Command {
         new Pair("error",   "Summon a nasty bug swarm to test the bug catcher.")
     ));
 
-    public HelpCommand(TaskManager taskManager) {
-        super(taskManager, Pattern.compile("^help$"));
-    }
+    private Response response;
 
-    @Override
-    public Response execute(Matcher matcher) {
+    public HelpCommand(TaskManager taskManager, Random random) {
+        super(taskManager, random, Pattern.compile("^help$"));
+
         StringBuilder sb = new StringBuilder();
         sb.append("You hurriedly scan the book as the light grows dim:");
 
@@ -42,6 +42,11 @@ public class HelpCommand extends Command {
         }
 
         sb.setLength(sb.length() - 1);
-        return new Response(sb.toString());
+        this.response = new Response(sb.toString());
+    }
+
+    @Override
+    public Response execute(Matcher matcher) {
+        return response;
     }
 }
