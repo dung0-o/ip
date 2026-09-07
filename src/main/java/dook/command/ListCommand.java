@@ -11,11 +11,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
-        if (!taskManager.isEmpty()) {
-            printReply(taskManager.listTasks());
-        } else {
-            printReply("You are alone in this darkness.");
-        }
+    public Response execute(Matcher matcher) {
+        return new Response(taskManager.listTasks());
     }
 }

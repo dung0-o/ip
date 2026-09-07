@@ -12,17 +12,15 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
+    public Response execute(Matcher matcher) {
         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
         Task task = taskManager.getTask(taskIndex);
 
-        if (task == null) {
-            printReply("You reach into the void. That task does not exist.");
-        } else if (!task.isDone()) {
-            printReply("It waits for you, still undone. No change made:", task);
-        } else {
-            task.setDone(false);
-            printReply("It festers in the dark. Marked as unfinished:", task);
+        if (!task.isDone()) {
+            return new Response("It waits for you, still undone. No change made:", task);
         }
+
+        task.setDone(false);
+        return new Response("It festers in the dark. Marked as unfinished:", task);
     }
 }

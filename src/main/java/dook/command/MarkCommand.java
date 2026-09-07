@@ -12,17 +12,15 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
+    public Response execute(Matcher matcher) {
         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
         Task task = taskManager.getTask(taskIndex);
 
-        if (task == null) {
-            printReply("You reach into the void. That task does not exist.");
-        } else if (task.isDone()) {
-            printReply("The grave is already sealed. This task is finished:", task);
-        } else {
-            task.setDone(true);
-            printReply("A debt is paid. Marked as done:", task);
+        if (task.isDone()) {
+            return new Response("The grave is already sealed. This task is finished:", task);
         }
+
+        task.setDone(true);
+        return new Response("A debt is paid. Marked as done:", task);
     }
 }

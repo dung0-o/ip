@@ -7,18 +7,19 @@ import java.util.regex.Matcher;
 import dook.TaskManager;
 
 public class GreetCommand extends Command {
-    private final String BANNER =   """
-                                        ▓█████▄  ▒█████   ▒█████   ██ ▄█▀
-                                        ▒██▀ ██▌▒██▒  ██▒▒██▒  ██▒ ██▄█▒
-                                        ░██   █▌▒██░  ██▒▒██░  ██▒▓███▄░
-                                        ░▓█▄   ▌▒██   ██░▒██   ██░▓██ █▄
-                                        ░▒████▓ ░ ████▓▒░░ ████▓▒░▒██▒ █▄
-                                         ▒▒▓  ▒ ░ ▒░▒░▒░ ░ ▒░▒░▒░ ▒ ▒▒ ▓▒
-                                         ░ ▒  ▒   ░ ▒ ▒░   ░ ▒ ▒░ ░ ░▒ ▒░
-                                         ░ ░  ░ ░ ░ ░ ▒  ░ ░ ░ ▒  ░ ░░ ░
-                                           ░        ░ ░      ░ ░  ░  ░
-                                         ░
-                                    """;
+    private final String BANNER =
+        """
+                        ▓█████▄  ▒█████   ▒█████   ██ ▄█▀
+                        ▒██▀ ██▌▒██▒  ██▒▒██▒  ██▒ ██▄█▒
+                        ░██   █▌▒██░  ██▒▒██░  ██▒▓███▄░
+                        ░▓█▄   ▌▒██   ██░▒██   ██░▓██ █▄
+                        ░▒████▓ ░ ████▓▒░░ ████▓▒░▒██▒ █▄
+                         ▒▒▓  ▒ ░ ▒░▒░▒░ ░ ▒░▒░▒░ ▒ ▒▒ ▓▒
+                         ░ ▒  ▒   ░ ▒ ▒░   ░ ▒ ▒░ ░ ░▒ ▒░
+                         ░ ░  ░ ░ ░ ░ ▒  ░ ░ ░ ▒  ░ ░░ ░
+                           ░        ░ ░      ░ ░  ░  ░
+                         ░
+        """;
     private final String[] GREETINGS = {
         "The shadows just got a little colder.",
         "You should not have opened this chat.",
@@ -31,8 +32,8 @@ public class GreetCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
+    public Response execute(Matcher matcher) {
         String greeting = GREETINGS[RANDOM.nextInt(GREETINGS.length)];
-        printReply(BANNER + "\nI am Dook.\n" + greeting);
+        return new Response(BANNER + "\nI am Dook.\n" + greeting);
     }
 }

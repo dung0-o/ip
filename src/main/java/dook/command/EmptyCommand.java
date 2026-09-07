@@ -11,7 +11,7 @@ public class EmptyCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
-        printReply("Silence won't keep you safe anymore.");
+    public Response execute(Matcher matcher) {
+        return new Response("Silence won't keep you safe anymore.");
     }
 }

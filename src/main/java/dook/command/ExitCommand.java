@@ -11,8 +11,9 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute(Matcher matcher) {
+    public Response execute(Matcher matcher) {
         System.out.println("\nGoodbye for now.");
         System.exit(0);
+        return null;
     }
 }
