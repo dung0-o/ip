@@ -8,6 +8,8 @@ import dook.TaskManager;
 import dook.task.Task;
 
 public class AddTaskCommand extends Command {
+    private boolean wasAdded = false;
+
     public AddTaskCommand(String userQuery) {
         super(userQuery);
     }
@@ -23,11 +25,14 @@ public class AddTaskCommand extends Command {
         Random random
     ) {
         Task newTask = taskManager.addTask(userQuery);
+        wasAdded = true;
         return new Response("Scratched into the ledger:", newTask);
     }
 
     @Override
     public void reverse(TaskManager taskManager) {
-        taskManager.deleteLastTask();
+        if (wasAdded) {
+            taskManager.deleteLastTask();
+        }
     }
 }

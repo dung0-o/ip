@@ -29,7 +29,8 @@ public class HelpCommand extends Command {
                     "Add an event task that you will surely bail out last minute."),
 
         new Pair("error",           "Summon a nasty bug swarm to test the bug catcher."),
-        new Pair("delete all",      "Relieve yourself from all burdens.")
+        new Pair("delete all",      "Relieve yourself from all burdens."),
+        new Pair("undo",            "Second chance for those haunted by past mistakes.")
     ));
     private static String helpMessage;
 

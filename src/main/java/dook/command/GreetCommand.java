@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import dook.TaskManager;
 
 public class GreetCommand extends Command {
-    private static final Pattern PATTERN = Pattern.compile("^\\s+$");
+    private static final Pattern PATTERN = Pattern.compile("^\\s+");
     private static final String BANNER =
         """
                         ▓█████▄  ▒█████   ▒█████   ██ ▄█▀

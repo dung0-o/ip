@@ -12,6 +12,10 @@ public abstract class Command {
         this.userQuery = userQuery;
     }
 
+    public String getUserQuery() {
+        return userQuery;
+    }
+
     public void reverse(TaskManager taskManager) {}
 
     public abstract Response execute(

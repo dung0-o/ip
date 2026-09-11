@@ -20,6 +20,7 @@ import dook.command.GreetCommand;
 import dook.command.HelpCommand;
 import dook.command.ListCommand;
 import dook.command.MarkCommand;
+import dook.command.UndoCommand;
 import dook.command.UnmarkCommand;
 
 import dook.exception.UnknownCommandException;
@@ -41,6 +42,7 @@ public class CommandManager {
         DeleteAllCommand::parse,
         ErrorCommand::parse,
         HelpCommand::parse,
+        UndoCommand::parse,
         AddTaskCommand::parse
     );
 
