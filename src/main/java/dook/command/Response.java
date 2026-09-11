@@ -6,4 +6,8 @@ public record Response(String message, Task task) {
     public Response(String message) {
         this(message, null);
     }
+
+    public boolean hasTask() {
+        return (task != null);
+    }
 }

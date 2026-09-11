@@ -7,10 +7,10 @@ public class ChatInterface {
     private final String DIVIDER = "_".repeat(BAR_LENGTH) + "\n\n> ";
 
     public void printResponse(Response response) {
-        if (response.task() == null) {
-            System.out.print("\n" + response.message() + "\n" + DIVIDER);
-        } else {
+        if (response.hasTask()) {
             System.out.print("\n" + response.message() + "\n  " + response.task() + "\n" + DIVIDER);
+        } else {
+            System.out.print("\n" + response.message() + "\n" + DIVIDER);
         }
     }
 

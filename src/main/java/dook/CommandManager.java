@@ -1,8 +1,11 @@
 package dook;
 
-import java.util.Random;
 import java.util.List;
+import java.util.Deque;
+import java.util.Random;
+import java.util.Optional;
 import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.regex.Matcher;
 
 import dook.command.Command;
@@ -22,32 +25,44 @@ import dook.command.UnmarkCommand;
 import dook.exception.UnknownCommandException;
 
 public class CommandManager {
-    private List<Command> commands;
+    @FunctionalInterface
+    private interface CommandParser {
+        Optional<Command> parse(String input);
+    }
+
+    private final List<CommandParser> PARSERS = List.of(
+        GreetCommand::parse,
+        ExitCommand::parse,
+        EmptyCommand::parse,
+        ListCommand::parse,
+        MarkCommand::parse,
+        UnmarkCommand::parse,
+        DeleteCommand::parse,
+        DeleteAllCommand::parse,
+        ErrorCommand::parse,
+        HelpCommand::parse,
+        AddTaskCommand::parse
+    );
+
+    private Deque<Command> commandLog = new ArrayDeque<>();
     private TaskManager taskManager;
+    private Random random;
 
     public CommandManager(TaskManager taskManager, Random random) {
         this.taskManager = taskManager;
-        commands = new ArrayList<Command>();
-        commands.add(new GreetCommand(taskManager, random));
-        commands.add(new ExitCommand(taskManager, random));
-        commands.add(new EmptyCommand(taskManager, random));
-        commands.add(new ListCommand(taskManager, random));
-        commands.add(new MarkCommand(taskManager, random));
-        commands.add(new UnmarkCommand(taskManager, random));
-        commands.add(new DeleteCommand(taskManager, random));
-        commands.add(new DeleteAllCommand(taskManager, random));
-        commands.add(new ErrorCommand(taskManager, random));
-        commands.add(new HelpCommand(taskManager, random));
-        commands.add(new AddTaskCommand(taskManager, random));
+        this.random = random;
     }
 
     public Response processQuery(String userQuery) {
-        for (Command command : commands) {
-            Matcher matcher = command.getPattern().matcher(userQuery);
-            if (matcher.matches()) {
-                return command.execute(matcher);
+        for (CommandParser parser : PARSERS) {
+            Optional<Command> maybeCommand = parser.parse(userQuery);
+            if (maybeCommand.isPresent()) {
+                Command command = maybeCommand.get();
+                commandLog.push(command);
+                return command.execute(taskManager, commandLog, random);
             }
         }
+
         throw new UnknownCommandException();
     }
 }

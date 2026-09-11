@@ -1,6 +1,8 @@
 package dook.command;
 
+import java.util.Deque;
 import java.util.Random;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -8,20 +10,44 @@ import dook.TaskManager;
 import dook.task.Task;
 
 public class MarkCommand extends Command {
-    public MarkCommand(TaskManager taskManager, Random random) {
-        super(taskManager, random, Pattern.compile("^mark\\s+(\\d+)$"));
+    private static final Pattern PATTERN = Pattern.compile("^mark\\s+(\\d+)$");
+    private int taskIndex;
+    private Task task;
+    private boolean wasDone;
+
+    public MarkCommand(String userQuery, int taskIndex) {
+        super(userQuery);
+        this.taskIndex = taskIndex;
+    }
+
+    public static Optional<Command> parse(String userQuery) {
+        Matcher matcher = PATTERN.matcher(userQuery);
+        if (!matcher.matches()) {
+            return Optional.empty();
+        }
+        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
+        return Optional.of(new MarkCommand(userQuery, taskIndex));
     }
 
     @Override
-    public Response execute(Matcher matcher) {
-        int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-        Task task = taskManager.getTask(taskIndex);
+    public Response execute(
+        TaskManager taskManager,
+        Deque<Command> commandLog,
+        Random random
+    ) {
+        task = taskManager.getTask(taskIndex);
+        wasDone = task.isDone();
 
-        if (task.isDone()) {
+        if (wasDone) {
             return new Response("The grave is already sealed. This task is finished:", task);
         }
 
         task.setDone(true);
         return new Response("A debt is paid. Marked as done:", task);
+    }
+
+    @Override
+    public void reverse(TaskManager taskManager) {
+        task.setDone(wasDone);
     }
 }
