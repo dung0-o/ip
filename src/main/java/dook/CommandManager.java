@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import dook.command.Command;
 import dook.command.Response;
 import dook.command.AddTaskCommand;
+import dook.command.DeleteCommand;
+import dook.command.DeleteAllCommand;
 import dook.command.EmptyCommand;
 import dook.command.ErrorCommand;
 import dook.command.ExitCommand;
@@ -32,6 +34,8 @@ public class CommandManager {
         commands.add(new ListCommand(taskManager, random));
         commands.add(new MarkCommand(taskManager, random));
         commands.add(new UnmarkCommand(taskManager, random));
+        commands.add(new DeleteCommand(taskManager, random));
+        commands.add(new DeleteAllCommand(taskManager, random));
         commands.add(new ErrorCommand(taskManager, random));
         commands.add(new HelpCommand(taskManager, random));
         commands.add(new AddTaskCommand(taskManager, random));

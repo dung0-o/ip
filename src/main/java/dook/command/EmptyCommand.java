@@ -13,6 +13,6 @@ public class EmptyCommand extends Command {
 
     @Override
     public Response execute(Matcher matcher) {
-        return new Response("Silence won't keep you safe anymore.");
+        return new Response("Silence won't keep you safe.");
     }
 }

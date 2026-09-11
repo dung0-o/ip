@@ -39,6 +39,18 @@ public class TaskManager {
         }
     }
 
+    public Task deleteTask(int id) {
+        try {
+            return tasks.remove(id);
+        } catch (IndexOutOfBoundsException e) {
+            throw new TaskListIndexOutOfBoundsException();
+        }
+    }
+
+    public void deleteAllTasks() {
+        tasks.clear();
+    }
+
     public String listTasks() {
         if (tasks.isEmpty()) {
             throw new EmptyTaskListException();
