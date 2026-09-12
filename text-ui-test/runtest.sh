@@ -11,6 +11,11 @@ then
     rm ACTUAL.txt
 fi
 
+if [ -e "./task.txt" ]
+then
+    rm task.txt
+fi
+
 find .. -name "*.java" > sources.txt
 if ! javac -Xlint:none -d ../bin @sources.txt
 then
@@ -20,7 +25,7 @@ then
 fi
 rm sources.txt
 
-java -cp ../bin dook/Dook 412 < input.txt > ACTUAL.txt
+java -cp ../bin dook/Dook 412 . < input.txt > ACTUAL.txt
 diff -u ACTUAL.txt EXPECTED-UNIX.txt
 if [ $? -eq 0 ]
 then

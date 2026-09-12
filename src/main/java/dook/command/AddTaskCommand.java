@@ -15,6 +15,7 @@ public class AddTaskCommand extends Command {
     @Override
     public Response execute(Matcher matcher) {
         Task newTask = taskManager.addTask(matcher.group());
+        taskManager.save();
         return new Response("Scratched into the ledger:", newTask);
     }
 }

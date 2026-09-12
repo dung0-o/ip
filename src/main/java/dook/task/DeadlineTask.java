@@ -1,5 +1,6 @@
 package dook.task;
 
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -21,6 +22,15 @@ public class DeadlineTask extends Task {
     @Override
     public String toString() {
         return "[D]%s (by: %s)".formatted(super.toString(), deadline);
+    }
+
+    @Override
+    public List<String> save() {
+        List<String> result = super.save();
+        result.addAll(List.of(
+            deadline
+        ));
+        return result;
     }
 
     @Override

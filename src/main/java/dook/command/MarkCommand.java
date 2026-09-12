@@ -22,6 +22,7 @@ public class MarkCommand extends Command {
         }
 
         task.setDone(true);
+        taskManager.save();
         return new Response("A debt is paid. Marked as done:", task);
     }
 }

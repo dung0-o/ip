@@ -1,5 +1,6 @@
 package dook.task;
 
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -23,6 +24,16 @@ public class EventTask extends Task {
     @Override
     public String toString() {
         return "[E]%s (from: %s to: %s)".formatted(super.toString(), startDatetime, endDatetime);
+    }
+
+    @Override
+    public List<String> save() {
+        List<String> result = super.save();
+        result.addAll(List.of(
+            startDatetime,
+            endDatetime
+        ));
+        return result;
     }
 
     @Override
