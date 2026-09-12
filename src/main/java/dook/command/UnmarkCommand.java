@@ -43,6 +43,7 @@ public class UnmarkCommand extends Command {
         }
 
         task.setDone(false);
+        taskManager.save();
         return new Response("It festers in the dark. Marked as unfinished:", task);
     }
 

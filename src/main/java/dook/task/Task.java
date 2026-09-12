@@ -1,5 +1,7 @@
 package dook.task;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 
 public abstract class Task {
@@ -17,6 +19,14 @@ public abstract class Task {
 
     public void setDone(boolean isDone) {
         this.isDone = isDone;
+    }
+
+    public List<String> save() {
+        return new ArrayList<String>(List.of(
+            getClass().getName(),
+            String.valueOf(isDone),
+            description
+        ));
     }
 
     @Override

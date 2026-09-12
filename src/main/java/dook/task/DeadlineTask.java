@@ -1,5 +1,6 @@
 package dook.task;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -21,6 +22,15 @@ public class DeadlineTask extends Task {
             return Optional.empty();
         }
         return Optional.of(new DeadlineTask(matcher.group(1), matcher.group(2)));
+    }
+
+    @Override
+    public List<String> save() {
+        List<String> result = super.save();
+        result.addAll(List.of(
+            deadline
+        ));
+        return result;
     }
 
     @Override

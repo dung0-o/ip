@@ -1,5 +1,6 @@
 package dook.task;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -23,6 +24,16 @@ public class EventTask extends Task {
             return Optional.empty();
         }
         return Optional.of(new EventTask(matcher.group(1), matcher.group(2), matcher.group(3)));
+    }
+
+    @Override
+    public List<String> save() {
+        List<String> result = super.save();
+        result.addAll(List.of(
+            startDatetime,
+            endDatetime
+        ));
+        return result;
     }
 
     @Override

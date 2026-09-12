@@ -25,6 +25,7 @@ public class AddTaskCommand extends Command {
         Random random
     ) {
         Task newTask = taskManager.addTask(userQuery);
+        taskManager.save();
         wasAdded = true;
         return new Response("Scratched into the ledger:", newTask);
     }

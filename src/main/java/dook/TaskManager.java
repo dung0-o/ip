@@ -1,6 +1,7 @@
 package dook;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +28,13 @@ public class TaskManager {
     );
 
     private List<Task> tasks = new ArrayList<>();
+
+    private FileManager io;
+
+    public TaskManager(FileManager io) {
+        this.io = io;
+        load();
+    }
 
     public Task addTask(String userQuery) {
         for (TaskParser parser : PARSERS) {
@@ -93,5 +101,33 @@ public class TaskManager {
               .append(tasks.get(i));
         }
         return sb.toString();
+    }
+
+    public void save() {
+        io.writeTasks(tasks.stream()
+                            .map(task -> task.save())
+                            .toList()
+        );
+    }
+
+    public void load() {
+        List<List<String>> content = io.readTasks();
+        for (List<String> row : content) {
+            try {
+                Object[] constructorArgs = row.subList(2, row.size()).toArray();
+                Class<?>[] paramTypes = new Class<?>[constructorArgs.length];
+                Arrays.fill(paramTypes, String.class);
+
+                Task task = (Task) Class.forName(row.get(0))
+                                        .getConstructor(paramTypes)
+                                        .newInstance(constructorArgs);
+                boolean isDone = Boolean.parseBoolean(row.get(1));
+                task.setDone(isDone);
+                tasks.add(task);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

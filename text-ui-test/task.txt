@@ -1,0 +1,4 @@
+dook.task.ToDoTask|false|borrow book
+dook.task.DeadlineTask|false|return book|Sunday
+dook.task.EventTask|true|project meeting|Mon 2pm|4pm
+dook.task.EventTask|false|project 	meeting|Mon 	2pm|4pm
