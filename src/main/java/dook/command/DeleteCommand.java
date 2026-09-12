@@ -9,13 +9,12 @@ import java.util.regex.Matcher;
 import dook.TaskManager;
 import dook.task.Task;
 
-public class MarkCommand extends Command {
-    private static final Pattern PATTERN = Pattern.compile("^mark\\s+(\\d+)$");
+public class DeleteCommand extends Command {
+    private static final Pattern PATTERN = Pattern.compile("^delete\\s+(\\d+)$");
     private int taskIndex;
     private Task task;
-    private boolean wasDone;
 
-    public MarkCommand(String userQuery, int taskIndex) {
+    public DeleteCommand(String userQuery, int taskIndex) {
         super(userQuery);
         this.taskIndex = taskIndex;
     }
@@ -26,7 +25,7 @@ public class MarkCommand extends Command {
             return Optional.empty();
         }
         int taskIndex = Integer.parseInt(matcher.group(1)) - 1;
-        return Optional.of(new MarkCommand(userQuery, taskIndex));
+        return Optional.of(new DeleteCommand(userQuery, taskIndex));
     }
 
     @Override
@@ -35,19 +34,12 @@ public class MarkCommand extends Command {
         Deque<Command> commandLog,
         Random random
     ) {
-        task = taskManager.getTask(taskIndex);
-        wasDone = task.isDone();
-
-        if (wasDone) {
-            return new Response("The grave is already sealed. This task is finished:", task);
-        }
-
-        task.setDone(true);
-        return new Response("A debt is paid. Marked as done:", task);
+        task = taskManager.deleteTask(taskIndex);
+        return new Response("Ripped off the ledger:", task);
     }
 
     @Override
     public void reverse(TaskManager taskManager) {
-        task.setDone(wasDone);
+        taskManager.addTask(taskIndex, task);
     }
 }

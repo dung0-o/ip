@@ -1,7 +1,9 @@
 package dook;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import dook.task.Task;
 import dook.task.DeadlineTask;
@@ -13,22 +15,37 @@ import dook.exception.EmptyTaskListException;
 import dook.exception.TaskListIndexOutOfBoundsException;
 
 public class TaskManager {
+    @FunctionalInterface
+    private interface TaskParser {
+        Optional<Task> parse(String input);
+    }
+
+    private final List<TaskParser> PARSERS = List.of(
+        ToDoTask::parse,
+        DeadlineTask::parse,
+        EventTask::parse
+    );
+
     private List<Task> tasks = new ArrayList<>();
-    private Task[] taskTypes = {
-        new ToDoTask(),
-        new DeadlineTask(),
-        new EventTask()
-    };
 
     public Task addTask(String userQuery) {
-        for (Task taskType : taskTypes) {
-            Task newTask = taskType.getNewTask(userQuery);
-            if (newTask != null) {
+        for (TaskParser parser : PARSERS) {
+            Optional<Task> maybeTask = parser.parse(userQuery);
+            if (maybeTask.isPresent()) {
+                Task newTask = maybeTask.get();
                 tasks.add(newTask);
                 return newTask;
             }
         }
         throw new UnknownTaskException();
+    }
+
+    public void addTask(int taskIndex, Task task) {
+        tasks.add(taskIndex, task);
+    }
+
+    public void addTasks(Collection<Task> tasks) {
+        this.tasks.addAll(tasks);
     }
 
     public Task getTask(int id) {
@@ -37,6 +54,26 @@ public class TaskManager {
         } catch (IndexOutOfBoundsException e) {
             throw new TaskListIndexOutOfBoundsException();
         }
+    }
+
+    public List<Task> getAllTasks() {
+        return List.copyOf(tasks);
+    }
+
+    public Task deleteTask(int id) {
+        try {
+            return tasks.remove(id);
+        } catch (IndexOutOfBoundsException e) {
+            throw new TaskListIndexOutOfBoundsException();
+        }
+    }
+
+    public void deleteAllTasks() {
+        tasks.clear();
+    }
+
+    public void deleteLastTask() {
+        tasks.removeLast();
     }
 
     public String listTasks() {

@@ -23,6 +23,4 @@ public abstract class Task {
     public String toString() {
         return "[%s] %s".formatted(isDone ? "X" : " ", description);
     }
-
-    public abstract Task getNewTask(String userQuery);
 }

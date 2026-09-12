@@ -1,26 +1,26 @@
 package dook.command;
 
+import java.util.Deque;
 import java.util.Random;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import dook.TaskManager;
-import dook.task.Task;
 
 public abstract class Command {
-    protected TaskManager taskManager;
-    protected Random random;
-    private Pattern pattern;
+    protected String userQuery;
 
-    public Command(TaskManager taskManager, Random random, Pattern pattern) {
-        this.taskManager = taskManager;
-        this.random = random;
-        this.pattern = pattern;
+    public Command(String userQuery) {
+        this.userQuery = userQuery;
     }
 
-    public Pattern getPattern() {
-        return pattern;
+    public String getUserQuery() {
+        return userQuery;
     }
 
-    public abstract Response execute(Matcher matcher);
+    public void reverse(TaskManager taskManager) {}
+
+    public abstract Response execute(
+        TaskManager taskManager,
+        Deque<Command> commandLog,
+        Random random
+    );
 }
