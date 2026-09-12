@@ -35,11 +35,13 @@ public class DeleteCommand extends Command {
         Random random
     ) {
         task = taskManager.deleteTask(taskIndex);
+        taskManager.save();
         return new Response("Ripped off the ledger:", task);
     }
 
     @Override
     public void reverse(TaskManager taskManager) {
         taskManager.addTask(taskIndex, task);
+        taskManager.save();
     }
 }

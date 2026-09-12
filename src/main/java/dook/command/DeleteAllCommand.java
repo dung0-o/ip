@@ -35,11 +35,13 @@ public class DeleteAllCommand extends Command {
     ) {
         tasks = taskManager.getAllTasks();
         taskManager.deleteAllTasks();
+        taskManager.save();
         return new Response("You run off into a new void and leave everything behind.");
     }
 
     @Override
     public void reverse(TaskManager taskManager) {
         taskManager.addTasks(tasks);
+        taskManager.save();
     }
 }

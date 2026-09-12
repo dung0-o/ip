@@ -1,6 +1,13 @@
 
 gibberish
 list
+delete
+delete 10
+delete 1
+list
+delete 1
+delete 1
+list
 todo
 todo borrow book
 deadline
@@ -21,9 +28,5 @@ unmark
 unmark 1
 unmark 10
 unmark 2
-list
-delete
-delete 10
-delete 1
 list
 bye

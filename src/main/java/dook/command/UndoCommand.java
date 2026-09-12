@@ -35,7 +35,7 @@ public class UndoCommand extends Command {
     ) {
         commandLog.pop();
         if (commandLog.size() == 0) {
-            throw EmptyCommandLogException();
+            throw new EmptyCommandLogException();
         }
 
         Command lastCommand = commandLog.pop();

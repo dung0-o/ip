@@ -28,7 +28,6 @@ public class TaskManager {
     );
 
     private List<Task> tasks = new ArrayList<>();
-
     private FileManager io;
 
     public TaskManager(FileManager io) {
@@ -105,8 +104,8 @@ public class TaskManager {
 
     public void save() {
         io.writeTasks(tasks.stream()
-                            .map(task -> task.save())
-                            .toList()
+                           .map(task -> task.save())
+                           .toList()
         );
     }
 

@@ -34,6 +34,7 @@ public class AddTaskCommand extends Command {
     public void reverse(TaskManager taskManager) {
         if (wasAdded) {
             taskManager.deleteLastTask();
+            taskManager.save();
         }
     }
 }

@@ -1,13 +1,11 @@
 package dook;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import dook.command.Response;
 import dook.exception.DookException;
 
 public class Dook {
-    private static final Scanner SCANNER = new Scanner(System.in);
     private static final ChatInterface UI = new ChatInterface();
 
     private Random random;
@@ -40,7 +38,7 @@ public class Dook {
                 UI.printError("A swarm of bugs circles around you. They screech:", e);
             }
 
-            userQuery = SCANNER.nextLine().trim();
+            userQuery = UI.getUserQuery();
         }
     }
 

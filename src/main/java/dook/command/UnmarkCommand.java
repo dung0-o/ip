@@ -50,5 +50,6 @@ public class UnmarkCommand extends Command {
     @Override
     public void reverse(TaskManager taskManager) {
         task.setDone(wasDone);
+        taskManager.save();
     }
 }
