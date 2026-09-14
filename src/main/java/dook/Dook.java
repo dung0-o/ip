@@ -5,6 +5,9 @@ import java.util.Random;
 import dook.command.Response;
 import dook.exception.DookException;
 
+/**
+ * Represents a CLI program for task management.
+ */
 public class Dook {
     private static final ChatInterface UI = new ChatInterface();
 
@@ -13,6 +16,12 @@ public class Dook {
     private TaskManager taskManager;
     private CommandManager commandManager;
 
+    /**
+     * Constructs a new Dook with specified random generator and file manager.
+     *
+     * @param  random Random number generator.
+     * @param  io     The file manager.
+     */
     public Dook(Random random, FileManager io) {
         this.random = random;
         this.io = io;
@@ -21,6 +30,10 @@ public class Dook {
         commandManager = new CommandManager(taskManager, random);
     }
 
+    /**
+     * Starts the program.
+     * Loops between user inputs and giving responses.
+     */
     public void run() {
         String userQuery = " ";
         Response response;
@@ -42,6 +55,12 @@ public class Dook {
         }
     }
 
+    /**
+     * Initialises a new Dook with specified seed and data folder name.
+     * Starts that new Dook program.
+     *
+     * @param args Seed for random generator (optional); Data folder name (optional).
+     */
     public static void main(String[] args) {
         Random random = new Random();
         if (args.length > 0 && args[0].matches("-?\\d+")) {

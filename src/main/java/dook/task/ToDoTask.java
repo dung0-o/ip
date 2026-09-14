@@ -4,13 +4,28 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+/**
+ * Represents a basic task.
+ */
 public class ToDoTask extends Task {
     private static final Pattern PATTERN = Pattern.compile("^todo\\s+(\\S+(?:\\s+\\S+)*)$");
 
+    /**
+     * Constructs a new ToDoTask with specified description.
+     *
+     * @param  description The description of the task.
+     */
     public ToDoTask(String description) {
         super(description);
     }
 
+    /**
+     * Attempts parsing the user input into a ToDoTask.
+     * Looks for a phrase to be the description.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new ToDoTask (optional).
+     */
     public static Optional<Task> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {

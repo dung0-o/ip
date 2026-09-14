@@ -25,6 +25,9 @@ import dook.command.UnmarkCommand;
 
 import dook.exception.UnknownCommandException;
 
+/**
+ * Manages the processing of user inputs.
+ */
 public class CommandManager {
     @FunctionalInterface
     private interface CommandParser {
@@ -50,11 +53,26 @@ public class CommandManager {
     private TaskManager taskManager;
     private Random random;
 
+    /**
+     * Constructs a new CommandManager with specified task manager and random generator.
+     *
+     * @param  taskManager The task manager, contains task list.
+     * @param  random      The random number generator.
+     */
     public CommandManager(TaskManager taskManager, Random random) {
         this.taskManager = taskManager;
         this.random = random;
     }
 
+    /**
+     * Parses the user input into a command.
+     * Adds the command into the command log.
+     * Executes the command and gives response.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The response asnwering user input.
+     * @throws UnknownCommandException If parsing fails.
+     */
     public Response processQuery(String userQuery) {
         for (CommandParser parser : PARSERS) {
             Optional<Command> maybeCommand = parser.parse(userQuery);

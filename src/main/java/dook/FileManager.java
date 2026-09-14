@@ -18,6 +18,12 @@ import java.util.regex.Matcher;
 import dook.migrator.Migrator;
 import dook.exception.NoSerialisationVersionException;
 
+/**
+ * Manages the saving and loading of data from local files.
+ *
+ * This class handles the IOException internally,
+ * provides safe and simple read/write-to-files methods.
+ */
 public class FileManager {
     private final int SERIALISATION_VERSION = 0;
     private final Pattern SERIALISATION_VERSION_PATTERN =
@@ -32,6 +38,11 @@ public class FileManager {
     private Path taskFile;
     private Path metadataFile;
 
+    /**
+     * Constructs a new FileManager with the specified data directory.
+     *
+     * @param  dataDirName Relative path of the data directory.
+     */
     public FileManager(String dataDirName) {
         dataDir = Paths.get(dataDirName);
         taskFile = dataDir.resolve(TASK_FILE_NAME);
@@ -50,6 +61,13 @@ public class FileManager {
         }
     }
 
+    /**
+     * Attempts to write content to temp file, then copy to target file.
+     *
+     * @param  file  Path object of target file.
+     * @param  lines Content to be written.
+     * @return       Whether the writing was done without issues.
+     */
     public boolean tryWriteSafely(Path file, List<String> lines) {
         try {
             String fileName = file.getFileName().toString();
@@ -71,6 +89,9 @@ public class FileManager {
         return false;
     }
 
+    /**
+     * Saves the program serialisation version to local file.
+     */
     public void writeMetadata() {
         List<String> lines = List.of(
             "SERIALISATION_VERSION=" + SERIALISATION_VERSION
@@ -78,6 +99,12 @@ public class FileManager {
         tryWriteSafely(metadataFile, lines);
     }
 
+    /**
+     * Saves the serialised tasks to local file.
+     * Update the serialisation version.
+     *
+     * @param content Serialised task list.
+     */
     public void writeTasks(List<List<String>> content) {
         List<String> lines = content.stream()
                                     .map(row -> String.join(DELIMITER, row))
@@ -87,6 +114,12 @@ public class FileManager {
         }
     }
 
+    /**
+     * Get the local serialisation version from local metadata file.
+     *
+     * @return Serialisation version of the local files.
+     * @throws NoSerialisationVersionException If local serialisation version is missing.
+     */
     public int readSerialisationVersion() {
         try (BufferedReader reader = Files.newBufferedReader(metadataFile)) {
             String line = reader.readLine();
@@ -105,6 +138,13 @@ public class FileManager {
         throw new NoSerialisationVersionException();
     }
 
+    /**
+     * Get the task list in serialised form from the local file.
+     * If local serialisation version is missing, do not trust the local file content.
+     * If local serialisation version is outdated, perform incremental migration.
+     *
+     * @return Serialised task list.
+     */
     public List<List<String>> readTasks() {
         List<List<String>> content = new ArrayList<>();
         int serialisationVersion;

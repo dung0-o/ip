@@ -10,6 +10,9 @@ import java.util.regex.Matcher;
 
 import dook.TaskManager;
 
+/**
+ * Represents the command for showing what other commands do and their formats.
+ */
 public class HelpCommand extends Command {
     private record Pair(String command, String description) {}
 
@@ -48,10 +51,21 @@ public class HelpCommand extends Command {
         helpMessage = sb.toString();
     }
 
+    /**
+     * Constructs a new HelpCommand with the specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public HelpCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new HelpCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new HelpCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -60,6 +74,14 @@ public class HelpCommand extends Command {
         return Optional.of(new HelpCommand(userQuery));
     }
 
+    /**
+     * Returns command guides as a response.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
     @Override
     public Response execute(
         TaskManager taskManager,

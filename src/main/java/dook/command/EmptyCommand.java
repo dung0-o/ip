@@ -8,13 +8,27 @@ import java.util.regex.Matcher;
 
 import dook.TaskManager;
 
+/**
+ * Represents the command for empty user input.
+ */
 public class EmptyCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^$");
 
+    /**
+     * Constructs a new EmptyCommand with the specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public EmptyCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new EmptyCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new EmptyCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -23,6 +37,14 @@ public class EmptyCommand extends Command {
         return Optional.of(new EmptyCommand(userQuery));
     }
 
+    /**
+     * Returns a special message as a response for empty user input.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
     @Override
     public Response execute(
         TaskManager taskManager,

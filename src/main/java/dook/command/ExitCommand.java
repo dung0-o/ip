@@ -8,13 +8,27 @@ import java.util.regex.Matcher;
 
 import dook.TaskManager;
 
+/**
+ * Represents the command for closing the CLI program.
+ */
 public class ExitCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^bye");
 
+    /**
+     * Constructs a new ExitCommand with the specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public ExitCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new ExitCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new ExitCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -23,6 +37,14 @@ public class ExitCommand extends Command {
         return Optional.of(new ExitCommand(userQuery));
     }
 
+    /**
+     * Closes the program.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
     @Override
     public Response execute(
         TaskManager taskManager,

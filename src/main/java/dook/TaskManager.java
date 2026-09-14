@@ -15,6 +15,9 @@ import dook.exception.UnknownTaskException;
 import dook.exception.EmptyTaskListException;
 import dook.exception.TaskListIndexOutOfBoundsException;
 
+/**
+ * Manages the modification and viewing of the task list.
+ */
 public class TaskManager {
     @FunctionalInterface
     private interface TaskParser {
@@ -30,11 +33,24 @@ public class TaskManager {
     private List<Task> tasks = new ArrayList<>();
     private FileManager io;
 
+    /**
+     * Constructs a new TaskManager with the specified file manager.
+     *
+     * @param  io The file manager, for storing and loading with local files.
+     */
     public TaskManager(FileManager io) {
         this.io = io;
         load();
     }
 
+    /**
+     * Parses a user input into a new task.
+     * Inserts it to the back of the task list.
+     *
+     * @param  userQuery Trimmed string input.
+     * @return           The newly created task.
+     * @throws UnknownTaskException If parsing fails.
+     */
     public Task addTask(String userQuery) {
         for (TaskParser parser : PARSERS) {
             Optional<Task> maybeTask = parser.parse(userQuery);
@@ -47,14 +63,32 @@ public class TaskManager {
         throw new UnknownTaskException();
     }
 
+    /**
+     * Inserts a task at the specified position.
+     *
+     * @param taskIndex The position to be inserted.
+     * @param task      The new task.
+     */
     public void addTask(int taskIndex, Task task) {
         tasks.add(taskIndex, task);
     }
 
+    /**
+     * Inserts multiple tasks to the back of the task list.
+     *
+     * @param tasks Multiple tasks to be inserted.
+     */
     public void addTasks(Collection<Task> tasks) {
         this.tasks.addAll(tasks);
     }
 
+    /**
+     * Retrieves the task at the specified position.
+     *
+     * @param  id The position in the task list.
+     * @return    The task.
+     * @throws TaskListIndexOutOfBoundsException If the specified position is invalid.
+     */
     public Task getTask(int id) {
         try {
             return tasks.get(id);
@@ -63,10 +97,22 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Retrieves a copy the task list.
+     *
+     * @return The copy of task list in immutable list form.
+     */
     public List<Task> getAllTasks() {
         return List.copyOf(tasks);
     }
 
+    /**
+     * Removes the task at the specified position.
+     *
+     * @param  id The position in the task list.
+     * @return    The task.
+     * @throws TaskListIndexOutOfBoundsException If the specified position is invalid.
+     */
     public Task deleteTask(int id) {
         try {
             return tasks.remove(id);
@@ -75,14 +121,25 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Removes all tasks in the current task list.
+     */
     public void deleteAllTasks() {
         tasks.clear();
     }
 
+    /**
+     * Removes the task at the back of the task list.
+     */
     public void deleteLastTask() {
         tasks.removeLast();
     }
 
+    /**
+     * Returns the list of task as a string in pretty format.
+     *
+     * @return Multi-line string format of the task list.
+     */
     public String listTasks() {
         if (tasks.isEmpty()) {
             throw new EmptyTaskListException();
@@ -102,6 +159,9 @@ public class TaskManager {
         return sb.toString();
     }
 
+    /**
+     * Stores the task list to local file.
+     */
     public void save() {
         io.writeTasks(tasks.stream()
                            .map(task -> task.save())
@@ -109,6 +169,9 @@ public class TaskManager {
         );
     }
 
+    /**
+     * Loads the task list from local file.
+     */
     public void load() {
         List<List<String>> content = io.readTasks();
         for (List<String> row : content) {

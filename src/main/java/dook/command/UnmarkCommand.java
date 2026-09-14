@@ -9,17 +9,34 @@ import java.util.regex.Matcher;
 import dook.TaskManager;
 import dook.task.Task;
 
+/**
+ * Represents the command for marking a task as not done.
+ */
 public class UnmarkCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^unmark\\s+(\\d+)$");
     private int taskIndex;
     private Task task;
     private boolean wasDone;
 
+    /**
+     * Constructs a new UnmarkCommand
+     * with specified user input and task position.
+     *
+     * @param  userQuery Trimmed user input.
+     * @param  taskIndex The position of the task in task list.
+     */
     public UnmarkCommand(String userQuery, int taskIndex) {
         super(userQuery);
         this.taskIndex = taskIndex;
     }
 
+    /**
+     * Attempts parsing user input into a UnmarkCommand.
+     * Looks for an integer to be task index.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new UnmarkCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -29,6 +46,16 @@ public class UnmarkCommand extends Command {
         return Optional.of(new UnmarkCommand(userQuery, taskIndex));
     }
 
+    /**
+     * Marks a task as not done.
+     * If the task status is already not done, returns a special response message.
+     * Else, saves the modified task list to local file.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
     @Override
     public Response execute(
         TaskManager taskManager,
@@ -47,6 +74,12 @@ public class UnmarkCommand extends Command {
         return new Response("It festers in the dark. Marked as unfinished:", task);
     }
 
+    /**
+     * Marks the task status with its previous status.
+     * Saves the modified task list to local file.
+     *
+     * @param taskManager {@inheritDoc}
+     */
     @Override
     public void reverse(TaskManager taskManager) {
         task.setDone(wasDone);

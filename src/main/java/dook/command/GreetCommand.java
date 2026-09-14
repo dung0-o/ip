@@ -8,6 +8,9 @@ import java.util.regex.Matcher;
 
 import dook.TaskManager;
 
+/**
+ * Represents the command for printing the greeting on screen.
+ */
 public class GreetCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^\\s+");
     private static final String BANNER =
@@ -29,10 +32,22 @@ public class GreetCommand extends Command {
         "Are you alone in the room right now?"
     };
 
+    /**
+     * Constructs a new GreetCommand with the specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public GreetCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new GreetCommand.
+     * Looks for untrimmed whitespaces.
+     *
+     * @param  userQuery User input.
+     * @return           The new GreetCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -41,6 +56,15 @@ public class GreetCommand extends Command {
         return Optional.of(new GreetCommand(userQuery));
     }
 
+    /**
+     * Returns the program banner and a randomly selected greeting
+     * as the response.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
     @Override
     public Response execute(
         TaskManager taskManager,

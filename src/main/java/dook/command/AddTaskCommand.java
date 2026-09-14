@@ -7,17 +7,41 @@ import java.util.Optional;
 import dook.TaskManager;
 import dook.task.Task;
 
+/**
+ * Represents the command for adding new task.
+ */
 public class AddTaskCommand extends Command {
     private boolean wasAdded = false;
 
+    /**
+     * Constructs a new AddTaskCommand with the specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public AddTaskCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new AddTaskCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new AddTaskCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         return Optional.of(new AddTaskCommand(userQuery));
     }
 
+    /**
+     * Attempts parsing user input into a task.
+     * Saves the modified task list to local file.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     * @see dook.TaskManager#addTask(String)
+     */
     @Override
     public Response execute(
         TaskManager taskManager,
@@ -30,6 +54,13 @@ public class AddTaskCommand extends Command {
         return new Response("Scratched into the ledger:", newTask);
     }
 
+    /**
+     * Removes the newly created task,
+     * which should be at the end of the task list.
+     * Saves the modified task list to local file.
+     *
+     * @param taskManager {@inheritDoc}
+     */
     @Override
     public void reverse(TaskManager taskManager) {
         if (wasAdded) {
