@@ -1,7 +1,6 @@
 package dook;
 
 import java.util.List;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,8 +10,9 @@ import dook.task.DeadlineTask;
 import dook.task.EventTask;
 import dook.task.ToDoTask;
 
+import dook.io.TaskFileIO;
+
 import dook.exception.UnknownTaskException;
-import dook.exception.EmptyTaskListException;
 import dook.exception.TaskListIndexOutOfBoundsException;
 
 /**
@@ -30,17 +30,17 @@ public class TaskManager {
         EventTask::parse
     );
 
-    private List<Task> tasks = new ArrayList<>();
-    private FileManager io;
+    private List<Task> tasks;
+    private TaskFileIO io;
 
     /**
      * Constructs a new TaskManager with the specified file manager.
      *
      * @param  io The file manager, for storing and loading with local files.
      */
-    public TaskManager(FileManager io) {
+    public TaskManager(TaskFileIO io) {
         this.io = io;
-        load();
+        tasks = io.restore();
     }
 
     /**
@@ -49,7 +49,8 @@ public class TaskManager {
      *
      * @param  userQuery Trimmed string input.
      * @return           The newly created task.
-     * @throws UnknownTaskException If parsing fails.
+     * @throws UnknownTaskException
+     *         If parsing fails.
      */
     public Task addTask(String userQuery) {
         for (TaskParser parser : PARSERS) {
@@ -87,7 +88,8 @@ public class TaskManager {
      *
      * @param  id The position in the task list.
      * @return    The task.
-     * @throws TaskListIndexOutOfBoundsException If the specified position is invalid.
+     * @throws TaskListIndexOutOfBoundsException
+     *         If the specified position is invalid.
      */
     public Task getTask(int id) {
         try {
@@ -111,7 +113,8 @@ public class TaskManager {
      *
      * @param  id The position in the task list.
      * @return    The task.
-     * @throws TaskListIndexOutOfBoundsException If the specified position is invalid.
+     * @throws TaskListIndexOutOfBoundsException
+     *         If the specified position is invalid.
      */
     public Task deleteTask(int id) {
         try {
@@ -136,60 +139,9 @@ public class TaskManager {
     }
 
     /**
-     * Returns the list of task as a string in pretty format.
-     *
-     * @return Multi-line string format of the task list.
-     */
-    public String listTasks() {
-        if (tasks.isEmpty()) {
-            throw new EmptyTaskListException();
-        }
-
-        String format = "%" + (tasks.size() / 10 + 1) + "d.";
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format(format, 1))
-          .append(tasks.get(0));
-
-        for (int i = 1; i < tasks.size(); i++) {
-            sb.append("\n")
-              .append(String.format(format, i+1))
-              .append(tasks.get(i));
-        }
-        return sb.toString();
-    }
-
-    /**
      * Stores the task list to local file.
      */
     public void save() {
-        io.writeTasks(tasks.stream()
-                           .map(task -> task.save())
-                           .toList()
-        );
-    }
-
-    /**
-     * Loads the task list from local file.
-     */
-    public void load() {
-        List<List<String>> content = io.readTasks();
-        for (List<String> row : content) {
-            try {
-                Object[] constructorArgs = row.subList(2, row.size()).toArray();
-                Class<?>[] paramTypes = new Class<?>[constructorArgs.length];
-                Arrays.fill(paramTypes, String.class);
-
-                Task task = (Task) Class.forName(row.get(0))
-                                        .getConstructor(paramTypes)
-                                        .newInstance(constructorArgs);
-                boolean isDone = Boolean.parseBoolean(row.get(1));
-                task.setDone(isDone);
-                tasks.add(task);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        io.serialise(tasks);
     }
 }

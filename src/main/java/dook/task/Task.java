@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
+import dook.io.SerialisedData;
+
 /**
  * Represents the template for all tasks.
  */
@@ -18,7 +20,7 @@ public abstract class Task {
      *
      * @param  description The description of the task.
      */
-    public Task(String description) {
+    protected Task(String description) {
         this.description = description;
         this.isDone = false;
     }
@@ -46,12 +48,12 @@ public abstract class Task {
      *
      * @return The task in list of strings format.
      */
-    public List<String> save() {
-        return new ArrayList<String>(List.of(
-            getClass().getName(),
+    public SerialisedData serialise() {
+        return new SerialisedData(
+            getClass(),
             String.valueOf(isDone),
             description
-        ));
+        );
     }
 
     /**

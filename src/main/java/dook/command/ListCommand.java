@@ -1,5 +1,6 @@
 package dook.command;
 
+import java.util.List;
 import java.util.Deque;
 import java.util.Random;
 import java.util.Optional;
@@ -7,6 +8,9 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import dook.TaskManager;
+import dook.task.Task;
+
+import dook.exception.EmptyTaskListException;
 
 /**
  * Represents the command for viewing the current task list in pretty format.
@@ -44,6 +48,8 @@ public class ListCommand extends Command {
      * @param  commandLog  {@inheritDoc}
      * @param  random      {@inheritDoc}
      * @return             {@inheritDoc}
+     * @throws EmptyTaskListException
+     *         If the task list is empty.
      */
     @Override
     public Response execute(
@@ -51,6 +57,23 @@ public class ListCommand extends Command {
         Deque<Command> commandLog,
         Random random
     ) {
-        return new Response(taskManager.listTasks());
+        List<Task> tasks = taskManager.getAllTasks();
+        if (tasks.isEmpty()) {
+            throw new EmptyTaskListException();
+        }
+
+        String format = "%" + (tasks.size() / 10 + 1) + "d.";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format(format, 1))
+          .append(tasks.get(0));
+
+        for (int i = 1; i < tasks.size(); i++) {
+            sb.append("\n")
+              .append(String.format(format, i+1))
+              .append(tasks.get(i));
+        }
+
+        return new Response(sb.toString());
     }
 }

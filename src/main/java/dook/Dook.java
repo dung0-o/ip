@@ -26,7 +26,7 @@ public class Dook {
         this.random = random;
         this.io = io;
 
-        taskManager = new TaskManager(io);
+        taskManager = new TaskManager(io.getTaskFileIO());
         commandManager = new CommandManager(taskManager, random);
     }
 

@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import dook.io.SerialisedData;
+
 /**
  * Represents a task with time frame.
  */
@@ -47,13 +49,10 @@ public class EventTask extends Task {
     }
 
     @Override
-    public List<String> save() {
-        List<String> result = super.save();
-        result.addAll(List.of(
-            startDatetime,
-            endDatetime
-        ));
-        return result;
+    public SerialisedData serialise() {
+        SerialisedData data = super.serialise();
+        data.add(startDatetime, endDatetime);
+        return data;
     }
 
     @Override

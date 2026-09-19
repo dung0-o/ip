@@ -21,7 +21,7 @@ public abstract class Command {
      *
      * @param  userQuery Trimmed user input.
      */
-    public Command(String userQuery) {
+    protected Command(String userQuery) {
         this.userQuery = userQuery;
     }
 

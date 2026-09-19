@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import dook.io.SerialisedData;
+
 /**
  * Represents a task with due time.
  */
@@ -42,12 +44,10 @@ public class DeadlineTask extends Task {
     }
 
     @Override
-    public List<String> save() {
-        List<String> result = super.save();
-        result.addAll(List.of(
-            deadline
-        ));
-        return result;
+    public SerialisedData serialise() {
+        SerialisedData data = super.serialise();
+        data.add(deadline);
+        return data;
     }
 
     @Override
