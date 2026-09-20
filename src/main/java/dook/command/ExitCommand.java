@@ -51,7 +51,8 @@ public class ExitCommand extends Command {
         Deque<Command> commandLog,
         Random random
     ) {
-        System.out.println("\nGoodbye for now.");
+        System.out.print("\nGoodbye for now.\n");
+
         System.exit(0);
         return null;
     }

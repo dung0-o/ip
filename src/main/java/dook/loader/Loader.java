@@ -8,6 +8,7 @@ import dook.io.SerialisedData;
  * Represents the template for loading from raw string to serialised data.
  * Used in {@link dook.io.FileIO#readFile()}.
  */
+@FunctionalInterface
 public interface Loader {
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.time.LocalDate;
 
 import dook.task.Task;
 import dook.task.DeadlineTask;
@@ -11,6 +12,7 @@ import dook.task.EventTask;
 import dook.task.ToDoTask;
 
 import dook.io.TaskFileIO;
+import dook.parser.Parser;
 
 import dook.exception.UnknownTaskException;
 import dook.exception.TaskListIndexOutOfBoundsException;
@@ -19,12 +21,7 @@ import dook.exception.TaskListIndexOutOfBoundsException;
  * Manages the modification and viewing of the task list.
  */
 public class TaskManager {
-    @FunctionalInterface
-    private interface TaskParser {
-        Optional<Task> parse(String input);
-    }
-
-    private final List<TaskParser> PARSERS = List.of(
+    private final List<Parser<Task>> PARSERS = List.of(
         ToDoTask::parse,
         DeadlineTask::parse,
         EventTask::parse
@@ -53,7 +50,7 @@ public class TaskManager {
      *         If parsing fails.
      */
     public Task addTask(String userQuery) {
-        for (TaskParser parser : PARSERS) {
+        for (Parser<Task> parser : PARSERS) {
             Optional<Task> maybeTask = parser.parse(userQuery);
             if (maybeTask.isPresent()) {
                 Task newTask = maybeTask.get();
@@ -100,6 +97,21 @@ public class TaskManager {
     }
 
     /**
+     * Retrieves the task at the specified position.
+     *
+     * @param  id The position in the task list.
+     * @return    The task.
+     * @throws TaskListIndexOutOfBoundsException
+     *         If the specified position is invalid.
+     */
+    public List<Task> getTasksByDate(LocalDate date) {
+        return tasks.stream()
+                    .filter(task -> task.isOnDate(date))
+                    .sorted()
+                    .toList();
+    }
+
+    /**
      * Retrieves a copy the task list.
      *
      * @return The copy of task list in immutable list form.
@@ -136,6 +148,10 @@ public class TaskManager {
      */
     public void deleteLastTask() {
         tasks.removeLast();
+    }
+
+    public void deleteExpiredTasks() {
+        tasks.removeIf(task -> task.isExpired());
     }
 
     /**

@@ -5,17 +5,27 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import dook.io.SerialisedData;
+import dook.parser.DateTimeParser;
 
 /**
  * Represents a task with time frame.
  */
 public class EventTask extends Task {
+    private static final DateTimeFormatter FULL_FORMATTER =
+        DateTimeFormatter.ofPattern("d MMM H:mm");
+    private static final DateTimeFormatter SHORT_FORMATTER =
+        DateTimeFormatter.ofPattern("H:mm");
+
     private static final Pattern PATTERN =
             Pattern.compile("^event\\s+{{phrase}}\\s+/from\\s+{{phrase}}\\s+/to\\s+{{phrase}}$"
                                     .replace("{{phrase}}", "(\\S+(?:\\s+\\S+)*)"));
-    private String startDatetime;
-    private String endDatetime;
+    private LocalDateTime startDatetime;
+    private LocalDateTime endDatetime;
 
     /**
      * Constructs a new EventTask with specified description,
@@ -25,7 +35,11 @@ public class EventTask extends Task {
      * @param  startDatetime The start time as string.
      * @param  endDatetime   The end time as string.
      */
-    public EventTask(String description, String startDatetime, String endDatetime) {
+    public EventTask(
+        String description,
+        LocalDateTime startDatetime,
+        LocalDateTime endDatetime
+    ) {
         super(description);
         this.startDatetime = startDatetime;
         this.endDatetime = endDatetime;
@@ -45,7 +59,38 @@ public class EventTask extends Task {
         if (!matcher.matches()) {
             return Optional.empty();
         }
-        return Optional.of(new EventTask(matcher.group(1), matcher.group(2), matcher.group(3)));
+
+        Optional<LocalDateTime> maybeStart = DateTimeParser.parseStartTime(matcher.group(2));
+        if (maybeStart.isEmpty()) {
+            return Optional.empty();
+        }
+
+        LocalDateTime startDatetime = maybeStart.get();
+        Optional<LocalDateTime> maybeEnd = DateTimeParser.parseEndTime(
+            matcher.group(3),
+            startDatetime.toLocalDate()
+        );
+        if (maybeEnd.isEmpty()) {
+            return Optional.empty();
+        }
+
+        LocalDateTime endDatetime = maybeEnd.get();
+        if (endDatetime.isBefore(startDatetime)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new EventTask(matcher.group(1), startDatetime, endDatetime));
+    }
+
+    @Override
+    public boolean isOnDate(LocalDate date) {
+        return date.compareTo(startDatetime.toLocalDate()) >= 0
+            && date.compareTo(endDatetime.toLocalDate()) <= 0;
+    }
+
+    @Override
+    public boolean isExpired() {
+        return endDatetime.isBefore(LocalDateTime.now());
     }
 
     @Override
@@ -56,7 +101,23 @@ public class EventTask extends Task {
     }
 
     @Override
+    protected LocalDateTime getSortValue() {
+        return startDatetime;
+    }
+
+    @Override
+    public String toStringWithTime() {
+        return startDatetime.format(TIME_FORMATTER)
+                + "-" + endDatetime.format(TIME_FORMATTER)
+                + " " + super.toString();
+    }
+
+    @Override
     public String toString() {
-        return "[E]%s (from: %s to: %s)".formatted(super.toString(), startDatetime, endDatetime);
+        boolean sameDate = startDatetime.toLocalDate().equals(endDatetime.toLocalDate());
+        return "[E]%s (from %s to %s)".formatted(
+            super.toString(),
+            startDatetime.format(FULL_FORMATTER),
+            endDatetime.format(sameDate ? SHORT_FORMATTER : FULL_FORMATTER));
     }
 }

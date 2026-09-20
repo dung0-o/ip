@@ -16,9 +16,9 @@ deadline		return book  /by
 deadline 	return book 	/by 	Sunday
 event
 event project meeting
-event		project meeting  /from
+event		project 	meeting  /from
 event	project meeting		/from		Mon 2pm	/to
-event project 	meeting /from Mon 	2pm /to 4pm
+event project meeting /from Mon 2pm /to 4pm
 mark
 mark 1
 mark 0
