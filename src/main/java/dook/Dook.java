@@ -48,7 +48,7 @@ public class Dook {
                 UI.printResponse(response);
 
             } catch (Exception e) {
-                UI.printError("A swarm of bugs circles around you. They screech:", e);
+                UI.printError(e);
             }
 
             userQuery = UI.getUserQuery();
