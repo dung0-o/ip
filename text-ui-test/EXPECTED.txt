@@ -25,8 +25,8 @@ ________________________________________________________________________
 
 > 
 1.[T][ ] borrow book
-2.[D][ ] return book (by: Sunday)
-3.[E][X] project 	meeting (from: Mon 	2pm to: 4pm)
+2.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+3.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
@@ -44,18 +44,18 @@ Ripped off the ledger:
 ________________________________________________________________________
 
 > 
-1.[D][ ] return book (by: Sunday)
-2.[E][X] project 	meeting (from: Mon 	2pm to: 4pm)
+1.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+2.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
 Ripped off the ledger:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
 ________________________________________________________________________
 
 > 
 Ripped off the ledger:
-  [E][X] project 	meeting (from: Mon 	2pm to: 4pm)
+  [E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
@@ -89,7 +89,7 @@ ________________________________________________________________________
 
 > 
 Scratched into the ledger:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
 ________________________________________________________________________
 
 > 
@@ -114,7 +114,7 @@ ________________________________________________________________________
 
 > 
 Scratched into the ledger:
-  [E][ ] project 	meeting (from: Mon 	2pm to: 4pm)
+  [E][ ] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
@@ -138,7 +138,7 @@ ________________________________________________________________________
 
 > 
 A debt is paid. Marked as done:
-  [E][X] project 	meeting (from: Mon 	2pm to: 4pm)
+  [E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
@@ -157,13 +157,13 @@ ________________________________________________________________________
 
 > 
 It waits for you, still undone. No change made:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
 ________________________________________________________________________
 
 > 
 1.[T][ ] borrow book
-2.[D][ ] return book (by: Sunday)
-3.[E][X] project 	meeting (from: Mon 	2pm to: 4pm)
+2.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+3.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 

@@ -4,12 +4,20 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import dook.io.SerialisedData;
 
 /**
  * Represents the template for all tasks.
  */
-public abstract class Task {
+public abstract class Task implements Comparable<Task> {
+    private static final String TIME_PATTERN = "HH:mm";
+    protected final String PADDING_FOR_TIME_SLOT = " ".repeat(TIME_PATTERN.length() + 1);
+    protected final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(TIME_PATTERN);
+
     private String description;
     private boolean isDone;
 
@@ -43,6 +51,14 @@ public abstract class Task {
         this.isDone = isDone;
     }
 
+    public boolean isOnDate(LocalDate date) {
+        return false;
+    }
+
+    public boolean isExpired() {
+        return false;
+    }
+
     /**
      * Return the serialised data of the task.
      *
@@ -51,9 +67,17 @@ public abstract class Task {
     public SerialisedData serialise() {
         return new SerialisedData(
             getClass(),
-            String.valueOf(isDone),
+            isDone,
             description
         );
+    }
+
+    protected abstract LocalDateTime getSortValue();
+    public abstract String toStringWithTime();
+
+    @Override
+    public int compareTo(Task other) {
+        return this.getSortValue().compareTo(other.getSortValue());
     }
 
     /**

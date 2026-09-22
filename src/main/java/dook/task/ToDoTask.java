@@ -3,6 +3,7 @@ package dook.task;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.time.LocalDateTime;
 
 /**
  * Represents a basic task.
@@ -32,6 +33,16 @@ public class ToDoTask extends Task {
             return Optional.empty();
         }
         return Optional.of(new ToDoTask(matcher.group(1)));
+    }
+
+    @Override
+    protected LocalDateTime getSortValue() {
+        return LocalDateTime.MIN;
+    }
+
+    @Override
+    public String toStringWithTime() {
+        return PADDING_FOR_TIME_SLOT.repeat(2) + super.toString();
     }
 
     @Override

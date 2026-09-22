@@ -12,7 +12,7 @@ import dook.io.TaskFileIO;
  * Manages the local files.
  */
 public class FileManager {
-    private final int APP_SERIALISATION_VERSION = 0;
+    private final int APP_SERIALISATION_VERSION = 1;
     private TaskFileIO taskFileIO;
 
     /**

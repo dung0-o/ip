@@ -11,8 +11,11 @@ import java.util.regex.Matcher;
 import dook.command.Command;
 import dook.command.Response;
 import dook.command.AddTaskCommand;
+import dook.command.CalendarCommand;
+import dook.command.DateCommand;
 import dook.command.DeleteCommand;
 import dook.command.DeleteAllCommand;
+import dook.command.DeleteExpiredCommand;
 import dook.command.EmptyCommand;
 import dook.command.ErrorCommand;
 import dook.command.ExitCommand;
@@ -20,21 +23,18 @@ import dook.command.GreetCommand;
 import dook.command.HelpCommand;
 import dook.command.ListCommand;
 import dook.command.MarkCommand;
+import dook.command.TodayCommand;
 import dook.command.UndoCommand;
 import dook.command.UnmarkCommand;
 
+import dook.parser.Parser;
 import dook.exception.UnknownCommandException;
 
 /**
  * Manages the processing of user inputs.
  */
 public class CommandManager {
-    @FunctionalInterface
-    private interface CommandParser {
-        Optional<Command> parse(String input);
-    }
-
-    private final List<CommandParser> PARSERS = List.of(
+    private final List<Parser<Command>> PARSERS = List.of(
         GreetCommand::parse,
         ExitCommand::parse,
         EmptyCommand::parse,
@@ -43,9 +43,13 @@ public class CommandManager {
         UnmarkCommand::parse,
         DeleteCommand::parse,
         DeleteAllCommand::parse,
+        DeleteExpiredCommand::parse,
         ErrorCommand::parse,
         HelpCommand::parse,
         UndoCommand::parse,
+        CalendarCommand::parse,
+        TodayCommand::parse,
+        DateCommand::parse,
         AddTaskCommand::parse
     );
 
@@ -74,7 +78,7 @@ public class CommandManager {
      * @throws UnknownCommandException If parsing fails.
      */
     public Response processQuery(String userQuery) {
-        for (CommandParser parser : PARSERS) {
+        for (Parser<Command> parser : PARSERS) {
             Optional<Command> maybeCommand = parser.parse(userQuery);
             if (maybeCommand.isPresent()) {
                 Command command = maybeCommand.get();

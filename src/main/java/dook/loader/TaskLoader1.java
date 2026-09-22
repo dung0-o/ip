@@ -1,16 +1,18 @@
 package dook.loader;
 
 import java.util.List;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 import dook.io.SerialisedData;
 
 /**
  * Represents the template for loading from raw string to serialised data.
  */
-public class TaskLoader0 {
+public class TaskLoader1 {
 	private static final String DELIMITER = "|";
 
 	/**
@@ -23,7 +25,19 @@ public class TaskLoader0 {
 		List<SerialisedData> content = new ArrayList<>();
 		for (String line : lines) {
 			try {
-				content.add(new SerialisedData(line.split(Pattern.quote(DELIMITER))));
+				String[] tokens = line.split(Pattern.quote(DELIMITER));
+				SerialisedData data = new SerialisedData(
+					Class.forName(tokens[0]),
+					Boolean.parseBoolean(tokens[1]),
+					tokens[2]
+				);
+
+				data.add(Arrays.stream(tokens)
+							   .skip(3)
+							   .map(LocalDateTime::parse)
+							   .toArray());
+
+				content.add(data);
 			} catch (ClassNotFoundException e) {
             	e.printStackTrace();
 				return new ArrayList<>();
