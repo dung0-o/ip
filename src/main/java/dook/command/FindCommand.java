@@ -18,7 +18,7 @@ import dook.exception.EmptyTaskListException;
  */
 public class FindCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^find\\s+(.+)$");
-    private static final int MAX_DISTANCE = 5;
+    private static final int MAX_EDIT_DISTANCE = 5;
 
     private String searchQuery;
 
@@ -82,10 +82,10 @@ public class FindCommand extends Command {
     }
 
     private List<Integer> search(List<Task> tasks) {
-        for (int distance = 0; distance <= MAX_DISTANCE; distance++) {
-            final int DISTANCE = distance;
+        for (int editDistance = 0; editDistance <= MAX_EDIT_DISTANCE; editDistance++) {
+            final int EDIT_DISTANCE = editDistance;
             List<Integer> indices = IntStream.range(0, tasks.size())
-                .filter(i -> fuzzyMatches(tasks.get(i), DISTANCE))
+                .filter(i -> fuzzyMatches(tasks.get(i), EDIT_DISTANCE))
                 .boxed()
                 .toList();
 
@@ -97,17 +97,17 @@ public class FindCommand extends Command {
         return List.of();
     }
 
-    private boolean fuzzyMatches(Task task, int distance) {
+    private boolean fuzzyMatches(Task task, int editDistance) {
         String taskDesc = normalise(task.getDescription());
 
-        if (distance == 0) {
+        if (editDistance == 0) {
             return taskDesc.contains(searchQuery);
         }
 
         for (String queryToken : searchQuery.split(" ")) {
             boolean hasMatch = false;
             for (String taskToken : taskDesc.split(" ")) {
-                if (DamerauLevenshtein.getOsaDistance(queryToken, taskToken) <= distance) {
+                if (DamerauLevenshtein.getOsaDistance(queryToken, taskToken) <= editDistance) {
                     hasMatch = true;
                     break;
                 }

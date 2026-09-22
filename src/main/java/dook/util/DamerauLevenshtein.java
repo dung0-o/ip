@@ -1,3 +1,14 @@
+/*
+ * Fuzzy search implementation using the Wagner-Fischer algorithm,
+ * adapted from the pseudocode for Damerau-Levenshtein distance on Wikipedia.
+ *
+ * Source: https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance
+ * License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+ * (https://creativecommons.org/licenses/by-sa/4.0/)
+ *
+ * Changes: Implemented the algorithm in Java.
+ */
+
 package dook.util;
 
 import java.util.Map;
@@ -17,38 +28,38 @@ public class DamerauLevenshtein {
         int lengthA = textA.length();
         int lengthB = textB.length();
 
-        int[][] damerauLevenshteinMatrix =
+        int[][] wagnerFischerMatrix =
             new int[lengthA + 1][lengthB + 1];
 
         for (int i = 1; i <= lengthA; i++) {
-            damerauLevenshteinMatrix[i][0] = i;
+            wagnerFischerMatrix[i][0] = i;
         }
         for (int j = 1; j <= lengthB; j++) {
-            damerauLevenshteinMatrix[0][j] = j;
+            wagnerFischerMatrix[0][j] = j;
         }
 
         for (int i = 1; i <= lengthA; i++) {
             for (int j = 1; j <= lengthB; j++) {
                 int cost = textA.charAt(i - 1) == textB.charAt(j - 1) ? 0 : 1;
 
-                damerauLevenshteinMatrix[i][j] = Math.min(Math.min(
-                    damerauLevenshteinMatrix[i - 1][j] + 1,
-                    damerauLevenshteinMatrix[i][j - 1] + 1),
-                    damerauLevenshteinMatrix[i - 1][j - 1] + cost
+                wagnerFischerMatrix[i][j] = Math.min(Math.min(
+                    wagnerFischerMatrix[i - 1][j] + 1,
+                    wagnerFischerMatrix[i][j - 1] + 1),
+                    wagnerFischerMatrix[i - 1][j - 1] + cost
                 );
 
                 if (i > 1 && j > 1
                         && textA.charAt(i - 1) == textB.charAt(j - 2)
                         && textA.charAt(i - 2) == textB.charAt(j - 1)) {
-                    damerauLevenshteinMatrix[i][j] = Math.min(
-                        damerauLevenshteinMatrix[i][j],
-                        damerauLevenshteinMatrix[i - 2][j - 2] + cost
+                    wagnerFischerMatrix[i][j] = Math.min(
+                        wagnerFischerMatrix[i][j],
+                        wagnerFischerMatrix[i - 2][j - 2] + cost
                     );
                 }
             }
         }
 
-        int distance = damerauLevenshteinMatrix[lengthA][lengthB];
+        int distance = wagnerFischerMatrix[lengthA][lengthB];
         cache.put(cacheKey, distance);
         return distance;
     }
