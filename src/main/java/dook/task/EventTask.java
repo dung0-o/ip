@@ -1,6 +1,7 @@
 package dook.task;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -17,9 +18,9 @@ import dook.parser.DateTimeParser;
  */
 public class EventTask extends Task {
     private static final DateTimeFormatter FULL_FORMATTER =
-        DateTimeFormatter.ofPattern("d MMM H:mm");
+        DateTimeFormatter.ofPattern("d MMM H:mm", Locale.UK);
     private static final DateTimeFormatter SHORT_FORMATTER =
-        DateTimeFormatter.ofPattern("H:mm");
+        DateTimeFormatter.ofPattern("H:mm", Locale.UK);
 
     private static final Pattern PATTERN =
             Pattern.compile("^event\\s+{{phrase}}\\s+/from\\s+{{phrase}}\\s+/to\\s+{{phrase}}$"

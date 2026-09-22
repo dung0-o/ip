@@ -1,6 +1,7 @@
 package dook.parser;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -81,7 +82,7 @@ public abstract class DateTimeParser {
 
         formatters.addAll(
             formatPatterns.stream()
-                          .map(DateTimeFormatter::ofPattern)
+                          .map(pattern -> DateTimeFormatter.ofPattern(pattern, Locale.UK))
                           .toList()
         );
     }
