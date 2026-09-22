@@ -3,7 +3,9 @@ package dook.command;
 import java.util.Deque;
 import java.util.Random;
 
-import dook.TaskManager;
+import dook.command.Command;
+import dook.command.Response;
+import dook.service.TaskManager;
 
 /**
  * Represents the template for commands.

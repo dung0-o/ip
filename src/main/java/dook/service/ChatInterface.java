@@ -1,4 +1,4 @@
-package dook;
+package dook.service;
 
 import java.util.Scanner;
 import java.util.logging.Level;

@@ -1,4 +1,4 @@
-package dook.command;
+package dook.command.time;
 
 import java.util.List;
 import java.util.Deque;
@@ -12,8 +12,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import dook.TaskManager;
 import dook.task.Task;
+import dook.command.Command;
+import dook.command.Response;
+import dook.service.TaskManager;
 import dook.parser.DateTimeParser;
 
 public class DateCommand extends Command {

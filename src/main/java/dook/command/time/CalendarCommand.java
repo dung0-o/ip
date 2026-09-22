@@ -1,4 +1,4 @@
-package dook.command;
+package dook.command.time;
 
 import java.util.List;
 import java.util.Deque;
@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
-import dook.TaskManager;
+import dook.command.Command;
+import dook.command.Response;
+import dook.service.TaskManager;
 import dook.task.Task;
 
 public class CalendarCommand extends Command {

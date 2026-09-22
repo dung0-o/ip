@@ -1,4 +1,4 @@
-package dook.command;
+package dook.command.task;
 
 import java.util.List;
 import java.util.Deque;
@@ -8,8 +8,10 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.stream.IntStream;
 
-import dook.TaskManager;
 import dook.task.Task;
+import dook.command.Command;
+import dook.command.Response;
+import dook.service.TaskManager;
 import dook.util.DamerauLevenshtein;
 import dook.exception.EmptyTaskListException;
 
