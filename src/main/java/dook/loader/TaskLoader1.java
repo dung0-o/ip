@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import java.time.LocalDateTime;
 
 import dook.io.SerialisedData;
@@ -14,6 +17,8 @@ import dook.io.SerialisedData;
  */
 public class TaskLoader1 {
 	private static final String DELIMITER = "|";
+    private static final Logger LOGGER =
+        Logger.getLogger(TaskLoader1.class.getName());
 
 	/**
 	 * Returns list of serialised data given list of strings.
@@ -39,7 +44,7 @@ public class TaskLoader1 {
 
 				content.add(data);
 			} catch (ClassNotFoundException e) {
-            	e.printStackTrace();
+                LOGGER.log(Level.SEVERE, "Local task file corrupted.", e);
 				return new ArrayList<>();
 			}
 		}

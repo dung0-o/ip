@@ -1,6 +1,8 @@
 package dook;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import dook.command.Response;
 
@@ -11,6 +13,7 @@ public class ChatInterface {
     private final int BAR_LENGTH = 72;
     private final String DIVIDER = "_".repeat(BAR_LENGTH) + "\n\n> ";
     private final Scanner SCANNER = new Scanner(System.in);
+    private final Logger LOGGER = Logger.getLogger(ChatInterface.class.getName());
 
     /**
      * Formats and prints the response answering user input.
@@ -31,9 +34,15 @@ public class ChatInterface {
      * @param msg Main message.
      * @param e   The exception.
      */
-    public void printError(String msg, Exception e) {
-        System.out.print("\n" + msg + "\n  ");
-        e.printStackTrace();
+    public void printError(Exception e) {
+        System.out.print(
+            """
+
+            A swarm of bugs emerges from nearby fallen trees.
+            Check the logs.
+            """
+        );
+        LOGGER.log(Level.WARNING, "Unchecked exception caught.", e);
         System.out.print(DIVIDER);
     }
 

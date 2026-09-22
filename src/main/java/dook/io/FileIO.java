@@ -11,12 +11,14 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.OptionalInt;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import dook.loader.Loader;
 import dook.migrator.Migrator;
-import dook.exception.NoSerialisationVersionException;
 
 /**
  * Represents the template for managing the saving and loading of data from local files.
@@ -25,26 +27,29 @@ import dook.exception.NoSerialisationVersionException;
  */
 public abstract class FileIO {
     private static final String METADATA_FILE_NAME = "metadata.txt";
-    private static final String SERIALISATION_VERSION_KEY = "SERIALISATION_VERSION=";
-    private static final Pattern SERIALISATION_VERSION_PATTERN =
-        Pattern.compile(SERIALISATION_VERSION_KEY + "(\\d+)");
+    private static final String VERSION_KEY = "SERIALISATION_VERSION=";
+    private static final Pattern VERSION_PATTERN =
+        Pattern.compile(VERSION_KEY + "(\\d+)");
+
+    private static final Logger LOGGER =
+        Logger.getLogger(FileIO.class.getName());
 
     private Path dataDir;
     private Path filePath;
     private Path metadataFile;
     private List<Loader> loaders;
     private List<Migrator> migrators;
-    private int appSerialisationVersion;
+    private int appVersion;
 
     protected FileIO(
         Path dataDir,
-        int appSerialisationVersion,
+        int appVersion,
         String fileName,
         List<Loader> loaders,
         List<Migrator> migrators
     ) {
         this.dataDir = dataDir;
-        this.appSerialisationVersion = appSerialisationVersion;
+        this.appVersion = appVersion;
         this.loaders = loaders;
         this.migrators = migrators;
 
@@ -56,15 +61,20 @@ public abstract class FileIO {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(
+                Level.WARNING,
+                "File %s is missing and cannot be created".formatted(fileName),
+                e
+            );
         }
 
         metadataFile = dataDir.resolve(METADATA_FILE_NAME);
     }
 
     private boolean tryWriteSafely(Path file, List<String> lines) {
+        String fileName = file.getFileName().toString();
+
         try {
-            String fileName = file.getFileName().toString();
             Path tempFile = Files.createTempFile(dataDir, fileName, ".tmp");
             try (BufferedWriter writer = Files.newBufferedWriter(tempFile)) {
                 for (String line : lines) {
@@ -78,15 +88,13 @@ public abstract class FileIO {
             return true;
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING, "Cannot write to file " + fileName, e);
         }
         return false;
     }
 
     private void writeMetadata() {
-        List<String> lines = List.of(
-            SERIALISATION_VERSION_KEY + appSerialisationVersion
-        );
+        List<String> lines = List.of(VERSION_KEY + appVersion);
         tryWriteSafely(metadataFile, lines);
     }
 
@@ -100,24 +108,32 @@ public abstract class FileIO {
             }
             return lines;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(
+                Level.WARNING,
+                "Cannot read from file " + file.getFileName().toString(),
+                e
+            );
         }
         return List.of();
     }
 
-    private int readSerialisationVersion() {
+    private OptionalInt readSerialisationVersion() {
         List<String> lines = tryReadSafely(metadataFile);
         for (String line : lines) {
-            Matcher matcher = SERIALISATION_VERSION_PATTERN.matcher(line);
+            Matcher matcher = VERSION_PATTERN.matcher(line);
             if (matcher.matches()) {
-                int dataSerialisationVersion = Integer.parseInt(matcher.group(1));
-                if (dataSerialisationVersion > appSerialisationVersion) {
-                    throw new NoSerialisationVersionException();
+                int dataVersion = Integer.parseInt(matcher.group(1));
+                if (dataVersion > appVersion) {
+                    LOGGER.warning("App serialisation version is outdated to read data.");
+                    return OptionalInt.empty();
                 }
-                return dataSerialisationVersion;
+
+                return OptionalInt.of(dataVersion);
             }
         }
-        throw new NoSerialisationVersionException();
+
+        LOGGER.warning("No serialisation version found, skipping loading the data.");
+        return OptionalInt.empty();
     }
 
     /**
@@ -143,19 +159,21 @@ public abstract class FileIO {
      * @return Serialised data.
      */
     protected List<SerialisedData> readFile() {
-        int dataSerialisationVersion;
-        try {
-            dataSerialisationVersion = readSerialisationVersion();
-        } catch (NoSerialisationVersionException e) {
-            e.printStackTrace();
+        OptionalInt maybeVersion = readSerialisationVersion();
+        if (maybeVersion.isEmpty()) {
             return List.of();
         }
 
-        List<String> lines = tryReadSafely(filePath);
-        List<SerialisedData> content = loaders.get(dataSerialisationVersion).load(lines);
+        int dataVersion = maybeVersion.getAsInt();
 
-        for (int version = dataSerialisationVersion; version < appSerialisationVersion; version++) {
+        List<String> lines = tryReadSafely(filePath);
+        List<SerialisedData> content = loaders.get(dataVersion).load(lines);
+
+        for (int version = dataVersion; version < appVersion; version++) {
             content = migrators.get(version).migrate(content);
+            LOGGER.info("Migrating data from version %d to %d.".formatted(
+                version, version + 1
+            ));
         }
 
         return content;
