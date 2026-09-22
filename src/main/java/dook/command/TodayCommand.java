@@ -1,17 +1,10 @@
 package dook.command;
 
-import java.util.List;
-import java.util.Deque;
-import java.util.Random;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
-import dook.TaskManager;
-import dook.task.Task;
 
 public class TodayCommand extends DateCommand {
     private static final Pattern PATTERN = Pattern.compile("^today$");

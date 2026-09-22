@@ -2,6 +2,7 @@ package dook.command;
 
 import java.util.List;
 import java.util.Deque;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Optional;
 import java.util.regex.Pattern;
@@ -18,7 +19,7 @@ import dook.parser.DateTimeParser;
 public class DateCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^date\\s+(\\S+(?:\\s+\\S+)*)$");
     private static final DateTimeFormatter DATE_FORMATTER =
-        DateTimeFormatter.ofPattern("EEE, d MMM yyyy");
+        DateTimeFormatter.ofPattern("EEE, d MMM yyyy", Locale.UK);
 
     private LocalDate date;
 

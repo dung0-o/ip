@@ -1,6 +1,7 @@
 package dook.task;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -17,7 +18,7 @@ import dook.parser.DateTimeParser;
  */
 public class DeadlineTask extends Task {
     private static final DateTimeFormatter DEADLINE_FORMATTER =
-        DateTimeFormatter.ofPattern("EEE, d MMM yyyy H:mm");
+        DateTimeFormatter.ofPattern("EEE, d MMM yyyy H:mm", Locale.UK);
 
     private static final Pattern PATTERN =
             Pattern.compile("^deadline\\s+{{phrase}}\\s+/by\\s+{{phrase}}$"
