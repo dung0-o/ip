@@ -12,6 +12,7 @@ import dook.command.Command;
 import dook.command.Response;
 import dook.command.AddTaskCommand;
 import dook.command.CalendarCommand;
+import dook.command.DateCommand;
 import dook.command.DeleteCommand;
 import dook.command.DeleteAllCommand;
 import dook.command.DeleteExpiredCommand;
@@ -48,6 +49,7 @@ public class CommandManager {
         UndoCommand::parse,
         CalendarCommand::parse,
         TodayCommand::parse,
+        DateCommand::parse,
         AddTaskCommand::parse
     );
 

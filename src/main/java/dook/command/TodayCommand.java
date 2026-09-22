@@ -13,13 +13,11 @@ import java.time.format.DateTimeFormatter;
 import dook.TaskManager;
 import dook.task.Task;
 
-public class TodayCommand extends Command {
+public class TodayCommand extends DateCommand {
     private static final Pattern PATTERN = Pattern.compile("^today$");
-    private static final DateTimeFormatter DATE_FORMATTER =
-        DateTimeFormatter.ofPattern("EEE, d MMM yyyy");
 
     public TodayCommand(String userQuery) {
-        super(userQuery);
+        super(userQuery, LocalDate.now());
     }
 
     public static Optional<Command> parse(String userQuery) {
@@ -28,19 +26,5 @@ public class TodayCommand extends Command {
             return Optional.empty();
         }
         return Optional.of(new TodayCommand(userQuery));
-    }
-
-    public Response execute(
-        TaskManager taskManager,
-        Deque<Command> commandLog,
-        Random random
-    ) {
-        LocalDate today = LocalDate.now();
-        List<Task> todayTasks = taskManager.getTasksByDate(today);
-        StringBuilder sb = new StringBuilder(today.format(DATE_FORMATTER));
-        for (Task task : todayTasks) {
-            sb.append("\n  " + task.toStringWithTime());
-        }
-        return new Response(sb.toString());
     }
 }
