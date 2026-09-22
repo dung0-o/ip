@@ -68,6 +68,9 @@ public class FindCommand extends Command {
         }
 
         List<Integer> indices = search(tasks);
+        if (indices.isEmpty()) {
+            return new Response("Your memory fails you. There is no such task.");
+        }
 
         String format = "%" + (tasks.size() / 10 + 1) + "d.";
         StringBuilder sb = new StringBuilder();

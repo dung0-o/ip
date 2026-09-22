@@ -25,7 +25,7 @@ ________________________________________________________________________
 
 > 
 1.[T][ ] borrow book
-2.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+2.[D][ ] return book (by Mon, 21 Sept 2026 23:59)
 3.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
@@ -44,13 +44,13 @@ Ripped off the ledger:
 ________________________________________________________________________
 
 > 
-1.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+1.[D][ ] return book (by Mon, 21 Sept 2026 23:59)
 2.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
 ________________________________________________________________________
 
 > 
 Ripped off the ledger:
-  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
+  [D][ ] return book (by Mon, 21 Sept 2026 23:59)
 ________________________________________________________________________
 
 > 
@@ -88,8 +88,18 @@ Try screaming `help` instead.
 ________________________________________________________________________
 
 > 
+Gibberish words only draw the monster nearer.
+Try screaming `help` instead.
+________________________________________________________________________
+
+> 
 Scratched into the ledger:
-  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
+  [D][ ] return book (by Mon, 21 Sept 2026 23:59)
+________________________________________________________________________
+
+> 
+Gibberish words only draw the monster nearer.
+Try screaming `help` instead.
 ________________________________________________________________________
 
 > 
@@ -157,13 +167,43 @@ ________________________________________________________________________
 
 > 
 It waits for you, still undone. No change made:
-  [D][ ] return book (by Sun, 27 Sept 2026 23:59)
+  [D][ ] return book (by Mon, 21 Sept 2026 23:59)
 ________________________________________________________________________
 
 > 
 1.[T][ ] borrow book
-2.[D][ ] return book (by Sun, 27 Sept 2026 23:59)
+2.[D][ ] return book (by Mon, 21 Sept 2026 23:59)
 3.[E][X] project meeting (from 21 Sept 14:00 to 16:00)
+________________________________________________________________________
+
+> 
+Mon, 21 Sept 2026
+  14:00-16:00 [X] project meeting
+        23:59 [ ] return book
+________________________________________________________________________
+
+> 
+Tue, 22 Sept 2026
+  No tasks found. Take a day off.
+________________________________________________________________________
+
+> 
+Gibberish words only draw the monster nearer.
+Try screaming `help` instead.
+________________________________________________________________________
+
+> 
+1.[T][ ] borrow book
+2.[D][ ] return book (by Mon, 21 Sept 2026 23:59)
+________________________________________________________________________
+
+> 
+1.[T][ ] borrow book
+2.[D][ ] return book (by Mon, 21 Sept 2026 23:59)
+________________________________________________________________________
+
+> 
+Your memory fails you. There is no such task.
 ________________________________________________________________________
 
 > 
