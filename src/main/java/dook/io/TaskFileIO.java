@@ -8,11 +8,11 @@ import java.util.logging.Logger;
 
 import java.nio.file.Path;
 
-import dook.loader.Loader;
-import dook.loader.TaskLoader0;
-import dook.loader.TaskLoader1;
-import dook.migrator.Migrator;
-import dook.migrator.TaskMigrator0;
+import dook.io.loader.Loader;
+import dook.io.loader.TaskLoader0;
+import dook.io.loader.TaskLoader1;
+import dook.io.migrator.Migrator;
+import dook.io.migrator.TaskMigrator0;
 import dook.task.Task;
 
 /**

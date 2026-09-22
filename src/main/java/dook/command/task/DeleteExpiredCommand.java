@@ -1,4 +1,4 @@
-package dook.command;
+package dook.command.task;
 
 import java.util.List;
 import java.util.Deque;
@@ -8,7 +8,9 @@ import java.util.Collection;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import dook.TaskManager;
+import dook.command.Command;
+import dook.command.Response;
+import dook.service.TaskManager;
 import dook.task.Task;
 
 /**

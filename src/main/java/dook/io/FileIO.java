@@ -17,8 +17,8 @@ import java.util.regex.Matcher;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import dook.loader.Loader;
-import dook.migrator.Migrator;
+import dook.io.loader.Loader;
+import dook.io.migrator.Migrator;
 
 /**
  * Represents the template for managing the saving and loading of data from local files.

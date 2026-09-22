@@ -1,4 +1,4 @@
-package dook.migrator;
+package dook.io.migrator;
 
 import java.util.List;
 

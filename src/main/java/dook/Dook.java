@@ -3,6 +3,10 @@ package dook;
 import java.util.Random;
 
 import dook.command.Response;
+import dook.service.FileManager;
+import dook.service.TaskManager;
+import dook.service.ChatInterface;
+import dook.service.CommandManager;
 import dook.exception.DookException;
 
 /**
