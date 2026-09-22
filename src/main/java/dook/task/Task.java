@@ -33,6 +33,10 @@ public abstract class Task implements Comparable<Task> {
         this.isDone = false;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Retrieves the status of the task (done or not).
      *

@@ -19,6 +19,7 @@ import dook.command.DeleteExpiredCommand;
 import dook.command.EmptyCommand;
 import dook.command.ErrorCommand;
 import dook.command.ExitCommand;
+import dook.command.FindCommand;
 import dook.command.GreetCommand;
 import dook.command.HelpCommand;
 import dook.command.ListCommand;
@@ -41,6 +42,7 @@ public class CommandManager {
         ListCommand::parse,
         MarkCommand::parse,
         UnmarkCommand::parse,
+        FindCommand::parse,
         DeleteCommand::parse,
         DeleteAllCommand::parse,
         DeleteExpiredCommand::parse,

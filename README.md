@@ -23,3 +23,8 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Acknowledgements
+
+- The fuzzy search feature uses an implementation of the Wagner-Fischer algorithm for Damerau-Levenshtein distance, which was adapted from the [Damerau–Levenshtein distance Wikipedia article](https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance).
+- The original pseudocode is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
