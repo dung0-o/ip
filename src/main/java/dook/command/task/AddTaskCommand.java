@@ -43,7 +43,7 @@ public class AddTaskCommand extends Command {
      * @param  commandLog  {@inheritDoc}
      * @param  random      {@inheritDoc}
      * @return             {@inheritDoc}
-     * @see dook.TaskManager#addTask(String)
+     * @see dook.service.TaskManager#addTask(String)
      */
     @Override
     public Response execute(
