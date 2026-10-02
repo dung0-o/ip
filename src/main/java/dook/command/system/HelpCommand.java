@@ -20,27 +20,27 @@ public class HelpCommand extends Command {
 
     private static final Pattern PATTERN = Pattern.compile("^help$");
     private static final List<Pair> COMMAND_DESCRIPTIONS = new ArrayList<>(List.of(
-        new Pair("help",            "Show this list of commands."),
-        new Pair("bye",             "Exit this nightmare."),
-        new Pair("list",            "View your overwhelmingly long task list."),
-        new Pair("todo [PHRASE]",   "Add a to-do task on to your already long list."),
+        new Pair("help",                "Show this list of commands."),
+        new Pair("bye",                 "Exit this nightmare."),
+        new Pair("list",                "View your overwhelmingly long task list."),
+        new Pair("todo DESCRIPTION",    "Add a to-do task on to your already long list."),
 
-        new Pair("deadline [PHRASE] /by [DATE]",
+        new Pair("deadline DESCRIPTION /by DATE_TIME",
                     "Add a deadline task, then procrastinate."),
 
-        new Pair("event [PHRASE] /from [DATE] /to [DATE]",
+        new Pair("event DESCRIPTION /from START_DATE_TIME /to END_DATE_TIME",
                     "Add an event task that you will surely bail out last minute."),
 
-        new Pair("mark [NUMBER]",   "Lie to yourself that the task is done."),
-        new Pair("unmark [NUMBER]", "Shamefully mark that task as unfinished."),
-        new Pair("delete [NUMBER]", "Run away from the task, permanently."),
-        new Pair("delete all",      "Relieve yourself from all burdens."),
-        new Pair("delete expired",  "Let go of tasks whose time has passed."),
-        new Pair("find [PHRASE]",   "Search for tasks matching the phrase."),
-        new Pair("undo",            "Second chance for those haunted by past mistakes."),
-        new Pair("calendar",        "View a calendar of your task density."),
-        new Pair("today",           "See what awaits you today."),
-        new Pair("date [DATE]",     "See what awaits you on a specific date.")
+        new Pair("mark INDEX",          "Lie to yourself that the task is done."),
+        new Pair("unmark INDEX",        "Shamefully mark that task as unfinished."),
+        new Pair("delete INDEX",        "Run away from the task, permanently."),
+        new Pair("delete all",          "Relieve yourself from all burdens."),
+        new Pair("delete expired",      "Let go of tasks whose time has passed."),
+        new Pair("find SEARCH_PHRASE",  "Search for tasks matching the phrase."),
+        new Pair("undo",                "Second chance for those haunted by past mistakes."),
+        new Pair("calendar",            "View a calendar of your task density."),
+        new Pair("today",               "See what awaits you today."),
+        new Pair("date DATE",           "See what awaits you on a specific date.")
     ));
     private static String helpMessage;
 

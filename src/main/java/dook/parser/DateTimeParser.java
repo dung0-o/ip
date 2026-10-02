@@ -35,7 +35,7 @@ public abstract class DateTimeParser {
         List<String> datePatterns = new ArrayList<>();
         List<String> dowPatterns = List.of("E", "EEEE");
         List<String> timePatterns = List.of("HH", "H", "hh", "h").stream()
-            .flatMap(hour -> List.of("'h'", "'H'", ":", " ").stream()
+            .flatMap(hour -> List.of("'h'", "'H'", ":", "").stream()
                 .flatMap(hourSep -> List.of("'m'", ":", "''", " ").stream()
                     .map(minuteSep -> "%s[%s][mm[%sss['s']]][ ][a]"
                         .formatted(hour, hourSep, minuteSep))))
