@@ -18,6 +18,9 @@ import dook.command.Response;
 import dook.service.TaskManager;
 import dook.parser.DateTimeParser;
 
+/**
+ * Represents the command for listing tasks on a specified date.
+ */
 public class DateCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^date\\s+(\\S+(?:\\s+\\S+)*)$");
     private static final DateTimeFormatter DATE_FORMATTER =
@@ -25,11 +28,23 @@ public class DateCommand extends Command {
 
     private LocalDate date;
 
+    /**
+     * Constructs a new DateCommand with specified user input and date.
+     *
+     * @param  userQuery Trimmed user input.
+     * @param  date      The date to list tasks for.
+     */
     public DateCommand(String userQuery, LocalDate date) {
         super(userQuery);
         this.date = date;
     }
 
+    /**
+     * Attempts parsing user input into a new DateCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new DateCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -43,6 +58,15 @@ public class DateCommand extends Command {
         return Optional.of(new DateCommand(userQuery, maybeDateTime.get().toLocalDate()));
     }
 
+    /**
+     * Returns the tasks occurring on the specified date as a response.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
+    @Override
     public Response execute(
         TaskManager taskManager,
         Deque<Command> commandLog,

@@ -35,10 +35,30 @@ public class Dook {
     }
 
     /**
+     * Initialises a new Dook with specified seed and data folder name.
+     * Starts that new Dook program.
+     *
+     * @param args Seed for random generator (optional); Data folder name (optional).
+     */
+    public static void main(String[] args) {
+        Random random = new Random();
+        if (args.length > 0 && args[0].matches("-?\\d+")) {
+            long seed = Long.parseLong(args[0]);
+            random.setSeed(seed);
+        }
+
+        String dataDirName = args.length > 1 ? args[1] : "data";
+        FileManager io = new FileManager(dataDirName);
+
+        Dook dook = new Dook(random, io);
+        dook.run();
+    }
+
+    /**
      * Starts the program.
      * Loops between user inputs and giving responses.
      */
-    public void run() {
+    private void run() {
         String userQuery = " ";
         Response response;
 
@@ -57,25 +77,5 @@ public class Dook {
 
             userQuery = UI.getUserQuery();
         }
-    }
-
-    /**
-     * Initialises a new Dook with specified seed and data folder name.
-     * Starts that new Dook program.
-     *
-     * @param args Seed for random generator (optional); Data folder name (optional).
-     */
-    public static void main(String[] args) {
-        Random random = new Random();
-        if (args.length > 0 && args[0].matches("-?\\d+")) {
-            long seed = Long.parseLong(args[0]);
-            random.setSeed(seed);
-        }
-
-        String dataDirName = args.length > 1 ? args[1] : "data";
-        FileManager io = new FileManager(dataDirName);
-
-        Dook dook = new Dook(random, io);
-        dook.run();
     }
 }

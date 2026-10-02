@@ -25,10 +25,11 @@ public class AddTaskCommand extends Command {
     }
 
     /**
-     * Attempts parsing user input into a new AddTaskCommand.
+     * Returns a new AddTaskCommand for the given user input.
+     * This parser always succeeds.
      *
      * @param  userQuery Trimmed user input.
-     * @return           The new AddTaskCommand (optional).
+     * @return           The new AddTaskCommand, always present.
      */
     public static Optional<Command> parse(String userQuery) {
         return Optional.of(new AddTaskCommand(userQuery));

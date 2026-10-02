@@ -26,7 +26,7 @@ public class DeadlineTask extends Task {
     private LocalDateTime deadline;
 
     /**
-     * Constructs a new Deadline with specified description and due time.
+     * Constructs a new DeadlineTask with specified description and due time.
      *
      * @param  description   The description of the task.
      * @param  deadline      The due time as string.
@@ -58,16 +58,25 @@ public class DeadlineTask extends Task {
         return Optional.of(new DeadlineTask(matcher.group(1), maybeDeadline.get()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOnDate(LocalDate date) {
         return date.equals(deadline.toLocalDate());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isExpired() {
         return deadline.isBefore(LocalDateTime.now());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SerialisedData serialise() {
         SerialisedData data = super.serialise();
@@ -75,17 +84,26 @@ public class DeadlineTask extends Task {
         return data;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LocalDateTime getSortValue() {
         return deadline;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toStringWithTime() {
         return PADDING_FOR_TIME_SLOT + deadline.format(TIME_FORMATTER)
                 + " " + super.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[D]%s (by %s)".formatted(

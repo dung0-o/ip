@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 import dook.io.SerialisedData;
 
 /**
- * Represents the template for loading from raw string to serialised data.
+ * Loads serialised task data from version 1 format.
  */
 public class TaskLoader1 {
-	private static final String DELIMITER = "|";
+    private static final String DELIMITER = "|";
     private static final Logger LOGGER =
         Logger.getLogger(TaskLoader1.class.getName());
 
-	/**
-	 * Returns list of serialised data given list of strings.
-	 *
-	 * @param  lines The list of strings.
-	 * @return       The list of serialised data.
-	 */
+    /**
+     * Returns a list of serialised data from the given list of strings.
+     *
+     * @param  lines The list of strings.
+     * @return       The list of serialised data.
+     */
 	public static List<SerialisedData> load(List<String> lines) {
 		List<SerialisedData> content = new ArrayList<>();
 		for (String line : lines) {

@@ -50,10 +50,18 @@ public class FileManager {
         taskFileIO = new TaskFileIO(dataDir, APP_SERIALISATION_VERSION);
     }
 
+    /**
+     * Returns the task file I/O handler.
+     *
+     * @return The task file I/O handler.
+     */
     public TaskFileIO getTaskFileIO() {
         return taskFileIO;
     }
 
+    /**
+     * Configures the root logger to write to the log file.
+     */
     private static void configLogger() {
         for (Handler handler : rootLogger.getHandlers()) {
             rootLogger.removeHandler(handler);

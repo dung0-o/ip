@@ -29,10 +29,9 @@ public class ChatInterface {
     }
 
     /**
-     * Formats and prints the exception messages.
+     * Prints a generic error message and logs the given exception.
      *
-     * @param msg Main message.
-     * @param e   The exception.
+     * @param e The exception to log.
      */
     public void printError(Exception e) {
         System.out.print(

@@ -43,13 +43,14 @@ public class UndoCommand extends Command {
     }
 
     /**
-     * Removes and undoes the execution of the last command in the command log.
+     * Undoes the previous command by removing it from the command log
+     * and reversing its effects.
      *
      * @param  taskManager {@inheritDoc}
      * @param  commandLog  {@inheritDoc}
      * @param  random      {@inheritDoc}
      * @return             {@inheritDoc}
-     * @throws EmptyCommandLogException If the command log is empty.
+     * @throws EmptyCommandLogException If there is no previous command to undo.
      */
     @Override
     public Response execute(

@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Deque;
 import java.util.Random;
 import java.util.Optional;
-import java.util.ArrayList;
 import java.util.ArrayDeque;
-import java.util.regex.Matcher;
 
 import dook.command.Command;
 import dook.command.Response;

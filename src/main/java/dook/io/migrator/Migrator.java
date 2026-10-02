@@ -5,8 +5,8 @@ import java.util.List;
 import dook.io.SerialisedData;
 
 /**
- * Represents the template for migration of outdated serialised data.
- * Used in {@link dook.io.FileIOr#readFile()}.
+ * Represents a migrator that updates the outdated serialised data.
+ * Used in {@link dook.io.FileIO#readFile()}.
  */
 public interface Migrator {
 

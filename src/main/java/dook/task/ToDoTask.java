@@ -35,16 +35,25 @@ public class ToDoTask extends Task {
         return Optional.of(new ToDoTask(matcher.group(1)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LocalDateTime getSortValue() {
         return LocalDateTime.MIN;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toStringWithTime() {
         return PADDING_FOR_TIME_SLOT.repeat(2) + super.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[T]%s".formatted(super.toString());

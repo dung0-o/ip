@@ -35,14 +35,20 @@ public class TaskFileIO extends FileIO {
         Logger.getLogger(TaskFileIO.class.getName());
 
     /**
-     * Constructs a new FileManager with the specified data directory.
+     * Constructs a new TaskFileIO with the specified data directory and app serialisation version.
      *
-     * @param  dataDirName Relative path of the data directory.
+     * @param dataDir                 Relative path of the data directory.
+     * @param appSerialisationVersion The current app serialisation version.
      */
     public TaskFileIO(Path dataDir, int appSerialisationVersion) {
         super(dataDir, appSerialisationVersion, FILE_NAME, LOADERS, MIGRATORS);
     }
 
+    /**
+     * Saves the given tasks to the local task file.
+     *
+     * @param tasks The tasks to save.
+     */
     public void serialise(List<Task> tasks) {
         List<SerialisedData> content = tasks.stream()
                                             .map(task -> task.serialise())
@@ -50,6 +56,11 @@ public class TaskFileIO extends FileIO {
         writeFile(content);
     }
 
+    /**
+     * Restores tasks from the local task file.
+     *
+     * @return The restored tasks.
+     */
     public List<Task> restore() {
         List<SerialisedData> content = readFile();
         List<Task> tasks = new ArrayList<>();

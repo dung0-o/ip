@@ -14,11 +14,21 @@ package dook.util;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * Provides fuzzy string matching using the optimal string alignment distance.
+ */
 public class DamerauLevenshtein {
     private record Pair(String textA, String textB) {}
 
     private static Map<Pair, Integer> cache = new HashMap<>();
 
+    /**
+     * Returns the optimal string alignment distance between two strings.
+     *
+     * @param  textA The first string.
+     * @param  textB The second string.
+     * @return       The optimal string alignment distance.
+     */
     public static int getOsaDistance(String textA, String textB) {
         Pair cacheKey = new Pair(textA, textB);
         if (cache.containsKey(cacheKey)) {

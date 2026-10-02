@@ -5,41 +5,76 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * Represents serialised object data with a class and a list of details.
+ */
 @SuppressWarnings("unchecked")
 public class SerialisedData {
-	private static final String DELIMITER = "|";
-	private Class<?> klass;
-	private List<?> details;
+    private static final String DELIMITER = "|";
+    private Class<?> klass;
+    private List<?> details;
 
-	public SerialisedData(Class<?> klass, Object... args) {
-		this.klass = klass;
-		details = new ArrayList<>(Arrays.asList(args));
-	}
+    /**
+     * Constructs a new SerialisedData with the given class and details.
+     *
+     * @param klass The class of the serialised object.
+     * @param args  The details of the serialised object.
+     */
+    public SerialisedData(Class<?> klass, Object... args) {
+        this.klass = klass;
+        details = new ArrayList<>(Arrays.asList(args));
+    }
 
-	public SerialisedData(String... args) throws ClassNotFoundException {
-		this(
-			Class.forName(args[0]),
-			(Object[]) Arrays.copyOfRange(args, 1, args.length)
-		);
-	}
+    /**
+     * Constructs a new SerialisedData from a serialised string array.
+     *
+     * @param  args The serialised string array.
+     * @throws ClassNotFoundException If the class cannot be found.
+     */
+    public SerialisedData(String... args) throws ClassNotFoundException {
+        this(
+            Class.forName(args[0]),
+            (Object[]) Arrays.copyOfRange(args, 1, args.length)
+        );
+    }
 
-	public void add(Object... args) {
-		((List) details).addAll(Arrays.asList(args));
-	}
+    /**
+     * Adds additional details to this serialised data.
+     *
+     * @param args The details to add.
+     */
+    public void add(Object... args) {
+        ((List) details).addAll(Arrays.asList(args));
+    }
 
-	public Class<?> getKlass() {
-		return klass;
-	}
+    /**
+     * Returns the class of the serialised object.
+     *
+     * @return The class of the serialised object.
+     */
+    public Class<?> getKlass() {
+        return klass;
+    }
 
-	public List<?> getDetails() {
-		return List.copyOf(details);
-	}
+    /**
+     * Returns an immutable copy of the details.
+     *
+     * @return An immutable copy of the details.
+     */
+    public List<?> getDetails() {
+        return List.copyOf(details);
+    }
 
-	@Override
-	public String toString() {
-		String detailsString = details.stream()
-									  .map(String::valueOf)
-									  .collect(Collectors.joining(DELIMITER));
-		return klass.getName() + DELIMITER + detailsString;
-	}
+    /**
+     * Returns the serialised string representation.
+     *
+     * @return The serialised string representation.
+     */
+    @Override
+    public String toString() {
+        String detailsString = details.stream()
+                                      .map(String::valueOf)
+                                      .collect(Collectors.joining(DELIMITER));
+        return klass.getName() + DELIMITER + detailsString;
+    }
 }

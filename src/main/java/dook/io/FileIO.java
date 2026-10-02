@@ -71,6 +71,13 @@ public abstract class FileIO {
         metadataFile = dataDir.resolve(METADATA_FILE_NAME);
     }
 
+    /**
+     * Writes lines to the given file atomically.
+     *
+     * @param  file  The file to write to.
+     * @param  lines The lines to write.
+     * @return       Whether the write succeeded.
+     */
     private boolean tryWriteSafely(Path file, List<String> lines) {
         String fileName = file.getFileName().toString();
 
@@ -93,11 +100,20 @@ public abstract class FileIO {
         return false;
     }
 
+    /**
+     * Writes the current serialisation version to the metadata file.
+     */
     private void writeMetadata() {
         List<String> lines = List.of(VERSION_KEY + appVersion);
         tryWriteSafely(metadataFile, lines);
     }
 
+    /**
+     * Reads all lines from the given file.
+     *
+     * @param  file The file to read from.
+     * @return      The lines read, or an empty list on failure.
+     */
     private List<String> tryReadSafely(Path file) {
         try (BufferedReader reader = Files.newBufferedReader(file)) {
             List<String> lines = new ArrayList<>();
@@ -117,6 +133,11 @@ public abstract class FileIO {
         return List.of();
     }
 
+    /**
+     * Reads the serialisation version from the metadata file.
+     *
+     * @return The serialisation version, if available.
+     */
     private OptionalInt readSerialisationVersion() {
         List<String> lines = tryReadSafely(metadataFile);
         for (String line : lines) {

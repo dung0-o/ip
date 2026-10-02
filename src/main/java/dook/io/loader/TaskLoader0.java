@@ -10,20 +10,20 @@ import java.util.logging.Logger;
 import dook.io.SerialisedData;
 
 /**
- * Represents the template for loading from raw string to serialised data.
+ * Loads serialised task data from version 0 format.
  */
 public class TaskLoader0 {
-	private static final String DELIMITER = "|";
+    private static final String DELIMITER = "|";
     private static final Logger LOGGER =
         Logger.getLogger(TaskLoader0.class.getName());
 
-	/**
-	 * Returns list of serialised data given list of strings.
-	 *
-	 * @param  lines The list of strings.
-	 * @return       The list of serialised data.
-	 */
-	public static List<SerialisedData> load(List<String> lines) {
+    /**
+     * Returns a list of serialised data from the given list of strings.
+     *
+     * @param  lines The list of strings.
+     * @return       The list of serialised data.
+     */
+    public static List<SerialisedData> load(List<String> lines) {
 		List<SerialisedData> content = new ArrayList<>();
 		for (String line : lines) {
 			try {

@@ -16,7 +16,7 @@ import dook.util.DamerauLevenshtein;
 import dook.exception.EmptyTaskListException;
 
 /**
- * Represents the command for viewing the current task list in pretty format.
+ * Represents the command for searching tasks by fuzzy description matching.
  */
 public class FindCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^find\\s+(.+)$");
@@ -25,9 +25,10 @@ public class FindCommand extends Command {
     private String searchQuery;
 
     /**
-     * Constructs a new ListCommand with specified user input.
+     * Constructs a new FindCommand with specified user input and search query.
      *
-     * @param  userQuery Trimmed user input.
+     * @param  userQuery   Trimmed user input.
+     * @param  searchQuery The query to search for.
      */
     public FindCommand(String userQuery, String searchQuery) {
         super(userQuery);
@@ -35,10 +36,10 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Attempts parsing user input into a new ListCommand.
+     * Attempts parsing user input into a new FindCommand.
      *
      * @param  userQuery Trimmed user input.
-     * @return           The new ListCommand (optional).
+     * @return           The new FindCommand (optional).
      */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
@@ -49,7 +50,7 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Returns the pretty-print format of the task list as a response.
+     * Returns a formatted list of tasks matching the search query.
      *
      * @param  taskManager {@inheritDoc}
      * @param  commandLog  {@inheritDoc}
@@ -77,7 +78,7 @@ public class FindCommand extends Command {
         String format = "%" + (tasks.size() / 10 + 1) + "d.";
         StringBuilder sb = new StringBuilder();
         for (int i : indices) {
-            sb.append(String.format(format, i+1))
+            sb.append(String.format(format, i + 1))
               .append(tasks.get(i))
               .append("\n");
         }
@@ -86,6 +87,12 @@ public class FindCommand extends Command {
         return new Response(sb.toString());
     }
 
+    /**
+     * Returns indices of tasks matching the search query at the smallest edit distance.
+     *
+     * @param  tasks The list of tasks to search.
+     * @return       The matching task indices.
+     */
     private List<Integer> search(List<Task> tasks) {
         for (int editDistance = 0; editDistance <= MAX_EDIT_DISTANCE; editDistance++) {
             final int EDIT_DISTANCE = editDistance;
@@ -102,6 +109,13 @@ public class FindCommand extends Command {
         return List.of();
     }
 
+    /**
+     * Returns whether the task description matches the search query within the given edit distance.
+     *
+     * @param  task         The task to check.
+     * @param  editDistance The maximum allowed edit distance.
+     * @return              Whether the task matches.
+     */
     private boolean fuzzyMatches(Task task, int editDistance) {
         String taskDesc = normalise(task.getDescription());
 
@@ -124,6 +138,12 @@ public class FindCommand extends Command {
         return true;
     }
 
+    /**
+     * Returns the normalised form of the given string.
+     *
+     * @param  s The string to normalise.
+     * @return   The normalised string.
+     */
     private String normalise(String s) {
         return s.toLowerCase()
                 .trim();

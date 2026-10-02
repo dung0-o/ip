@@ -14,14 +14,14 @@ import dook.service.TaskManager;
 import dook.task.Task;
 
 /**
- * Represents the command for clearing the task list.
+ * Represents the command for clearing expired tasks from the task list.
  */
 public class DeleteExpiredCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^delete expired$");
     private Collection<Task> tasks;
 
     /**
-     * Constructs a new DeleteAllCommand with the specified user input.
+     * Constructs a new DeleteExpiredCommand with the specified user input.
      *
      * @param  userQuery Trimmed user input.
      */
@@ -30,10 +30,10 @@ public class DeleteExpiredCommand extends Command {
     }
 
     /**
-     * Attempts parsing user input into a new DeleteAllCommand.
+     * Attempts parsing user input into a new DeleteExpiredCommand.
      *
      * @param  userQuery Trimmed user input.
-     * @return           The new DeleteAllCommand (optional).
+     * @return           The new DeleteExpiredCommand (optional).
      */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
@@ -44,8 +44,7 @@ public class DeleteExpiredCommand extends Command {
     }
 
     /**
-     * Clears the task list.
-     * Saves the empty task list to local file.
+     * Removes all expired tasks from the task list and saves the result.
      *
      * @param  taskManager {@inheritDoc}
      * @param  commandLog  {@inheritDoc}

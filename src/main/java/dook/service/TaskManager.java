@@ -72,7 +72,7 @@ public class TaskManager {
     }
 
     /**
-     * Inserts multiple tasks to the back of the task list.
+     * Adds multiple tasks to the end of the task list.
      *
      * @param tasks Multiple tasks to be inserted.
      */
@@ -97,12 +97,10 @@ public class TaskManager {
     }
 
     /**
-     * Retrieves the task at the specified position.
+     * Returns tasks that occur on the given date, sorted by time.
      *
-     * @param  id The position in the task list.
-     * @return    The task.
-     * @throws TaskListIndexOutOfBoundsException
-     *         If the specified position is invalid.
+     * @param  date The date to filter by.
+     * @return      The sorted list of tasks occurring on the date.
      */
     public List<Task> getTasksByDate(LocalDate date) {
         return tasks.stream()
@@ -137,19 +135,22 @@ public class TaskManager {
     }
 
     /**
-     * Removes all tasks in the current task list.
+     * Removes all tasks from the task list.
      */
     public void deleteAllTasks() {
         tasks.clear();
     }
 
     /**
-     * Removes the task at the back of the task list.
+     * Removes the last task from the task list.
      */
     public void deleteLastTask() {
         tasks.removeLast();
     }
 
+    /**
+     * Removes all expired tasks from the task list.
+     */
     public void deleteExpiredTasks() {
         tasks.removeIf(task -> task.isExpired());
     }

@@ -83,17 +83,26 @@ public class EventTask extends Task {
         return Optional.of(new EventTask(matcher.group(1), startDatetime, endDatetime));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isOnDate(LocalDate date) {
         return date.compareTo(startDatetime.toLocalDate()) >= 0
             && date.compareTo(endDatetime.toLocalDate()) <= 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isExpired() {
         return endDatetime.isBefore(LocalDateTime.now());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SerialisedData serialise() {
         SerialisedData data = super.serialise();
@@ -101,11 +110,17 @@ public class EventTask extends Task {
         return data;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LocalDateTime getSortValue() {
         return startDatetime;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toStringWithTime() {
         return startDatetime.format(TIME_FORMATTER)
@@ -113,6 +128,9 @@ public class EventTask extends Task {
                 + " " + super.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         boolean sameDate = startDatetime.toLocalDate().equals(endDatetime.toLocalDate());

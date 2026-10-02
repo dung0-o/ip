@@ -16,6 +16,9 @@ import dook.command.Response;
 import dook.service.TaskManager;
 import dook.task.Task;
 
+/**
+ * Represents the command for displaying a monthly calendar with task density indicators.
+ */
 public class CalendarCommand extends Command {
     private static final Pattern PATTERN = Pattern.compile("^calendar$");
 
@@ -30,10 +33,21 @@ public class CalendarCommand extends Command {
 
     private static final List<String> INDICATORS = List.of(" ", "░", "▒", "▓", "█");
 
+    /**
+     * Constructs a new CalendarCommand with specified user input.
+     *
+     * @param  userQuery Trimmed user input.
+     */
     public CalendarCommand(String userQuery) {
         super(userQuery);
     }
 
+    /**
+     * Attempts parsing user input into a new CalendarCommand.
+     *
+     * @param  userQuery Trimmed user input.
+     * @return           The new CalendarCommand (optional).
+     */
     public static Optional<Command> parse(String userQuery) {
         Matcher matcher = PATTERN.matcher(userQuery);
         if (!matcher.matches()) {
@@ -42,6 +56,15 @@ public class CalendarCommand extends Command {
         return Optional.of(new CalendarCommand(userQuery));
     }
 
+    /**
+     * Returns the calendar for the current month as a response.
+     *
+     * @param  taskManager {@inheritDoc}
+     * @param  commandLog  {@inheritDoc}
+     * @param  random      {@inheritDoc}
+     * @return             {@inheritDoc}
+     */
+    @Override
     public Response execute(
         TaskManager taskManager,
         Deque<Command> commandLog,
@@ -55,6 +78,13 @@ public class CalendarCommand extends Command {
         return new Response(calendar);
     }
 
+    /**
+     * Returns the calendar header for the given year and month.
+     *
+     * @param  year  The year.
+     * @param  month The month.
+     * @return       The formatted calendar header.
+     */
     private static String getHeader(int year, int month) {
         YearMonth yearMonth = YearMonth.of(year, month);
 
@@ -64,6 +94,13 @@ public class CalendarCommand extends Command {
         return padding + header + "\n" + DAYS_OF_WEEK + "\n ";
     }
 
+    /**
+     * Returns the density indicator for the given date.
+     *
+     * @param  taskManager The task manager containing the task list.
+     * @param  date        The date to check.
+     * @return             The density indicator.
+     */
     private static String getIndicator(TaskManager taskManager, LocalDate date) {
         List<Task> tasksByDate = taskManager.getTasksByDate(date);
 
@@ -76,6 +113,14 @@ public class CalendarCommand extends Command {
         return indicator;
     }
 
+    /**
+     * Returns the drawn calendar for the given year and month.
+     *
+     * @param  taskManager The task manager containing the task list.
+     * @param  year        The year.
+     * @param  month       The month.
+     * @return             The formatted calendar.
+     */
     private static String drawCalendar(
         TaskManager taskManager,
         int year, int month

@@ -19,6 +19,9 @@ import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalAccessor;
 import java.time.temporal.TemporalAdjusters;
 
+/**
+ * Parses flexible date and time strings into LocalDateTime objects.
+ */
 public abstract class DateTimeParser {
     private static List<DateTimeFormatter> formatters = new ArrayList<>(List.of(
         DateTimeFormatter.ISO_LOCAL_DATE_TIME,
@@ -87,6 +90,13 @@ public abstract class DateTimeParser {
         );
     }
 
+    /**
+     * Returns the local date represented by the temporal accessor.
+     *
+     * @param  temporal      The temporal accessor to read.
+     * @param  referenceDate The reference date used when the year is missing.
+     * @return               The resolved local date.
+     */
     private static LocalDate getLocalDate(
         TemporalAccessor temporal,
         LocalDate referenceDate
@@ -116,6 +126,13 @@ public abstract class DateTimeParser {
         return referenceDate;
     }
 
+    /**
+     * Returns the local time represented by the temporal accessor.
+     *
+     * @param  temporal   The temporal accessor to read.
+     * @param  isDeadline Whether the time is for a deadline.
+     * @return            The resolved local time.
+     */
     private static LocalTime getLocalTime(
         TemporalAccessor temporal,
         boolean isDeadline
@@ -149,6 +166,14 @@ public abstract class DateTimeParser {
         return LocalTime.of(hour, minute, second);
     }
 
+    /**
+     * Returns the parsed local date-time from the given input.
+     *
+     * @param  input         The input string to parse.
+     * @param  referenceDate The reference date used when the year is missing.
+     * @param  isDeadline    Whether the time is for a deadline.
+     * @return               The parsed local date-time, if successful.
+     */
     private static Optional<LocalDateTime> parse(
         String input,
         LocalDate referenceDate,
@@ -173,16 +198,35 @@ public abstract class DateTimeParser {
         return Optional.empty();
     }
 
+    /**
+     * Parses a start time from the given input.
+     *
+     * @param  input The input string to parse.
+     * @return       The parsed start time, if successful.
+     */
     public static Optional<LocalDateTime> parseStartTime(String input) {
         LocalDate today = LocalDate.now();
         return parse(input, today, false);
     }
 
+    /**
+     * Parses an end time from the given input.
+     *
+     * @param  input The input string to parse.
+     * @return       The parsed end time, if successful.
+     */
     public static Optional<LocalDateTime> parseEndTime(String input) {
         LocalDate today = LocalDate.now();
         return parse(input, today, true);
     }
 
+    /**
+     * Parses an end time from the given input using a default date.
+     *
+     * @param  input       The input string to parse.
+     * @param  defaultDate The default date to use.
+     * @return             The parsed end time, if successful.
+     */
     public static Optional<LocalDateTime> parseEndTime(String input, LocalDate defaultDate) {
         return parse(input, defaultDate, true);
     }

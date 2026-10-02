@@ -35,6 +35,11 @@ public abstract class Task implements Comparable<Task> {
         this.isDone = false;
     }
 
+    /**
+     * Returns the description of the task.
+     *
+     * @return The description of the task.
+     */
     public String getDescription() {
         return description;
     }
@@ -57,10 +62,21 @@ public abstract class Task implements Comparable<Task> {
         this.isDone = isDone;
     }
 
+    /**
+     * Returns whether the task occurs on the given date.
+     *
+     * @param  date The date to check.
+     * @return      Whether the task occurs on the date.
+     */
     public boolean isOnDate(LocalDate date) {
         return false;
     }
 
+    /**
+     * Returns whether the task is expired.
+     *
+     * @return Whether the task is expired.
+     */
     public boolean isExpired() {
         return false;
     }
@@ -78,9 +94,26 @@ public abstract class Task implements Comparable<Task> {
         );
     }
 
+    /**
+     * Returns the value used to sort this task.
+     *
+     * @return The sort value.
+     */
     protected abstract LocalDateTime getSortValue();
+
+    /**
+     * Returns a string representation including the task's time slot.
+     *
+     * @return The string representation with time.
+     */
     public abstract String toStringWithTime();
 
+    /**
+     * Compares this task with another task by sort value.
+     *
+     * @param  other The other task to compare with.
+     * @return       The comparison result.
+     */
     @Override
     public int compareTo(Task other) {
         return this.getSortValue().compareTo(other.getSortValue());
