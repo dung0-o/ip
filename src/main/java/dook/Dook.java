@@ -3,17 +3,17 @@ package dook;
 import java.util.Random;
 
 import dook.command.Response;
-import dook.service.FileManager;
-import dook.service.TaskManager;
+import dook.exception.DookException;
 import dook.service.ChatInterface;
 import dook.service.CommandManager;
-import dook.exception.DookException;
+import dook.service.FileManager;
+import dook.service.TaskManager;
 
 /**
  * Represents a CLI program for task management.
  */
 public class Dook {
-    private static final ChatInterface UI = new ChatInterface();
+    private static final ChatInterface ui = new ChatInterface();
 
     private Random random;
     private FileManager io;
@@ -65,17 +65,17 @@ public class Dook {
         while (true) {
             try {
                 response = commandManager.processQuery(userQuery);
-                UI.printResponse(response);
+                ui.printResponse(response);
 
             } catch (DookException e) {
                 response = new Response(e.getMessage());
-                UI.printResponse(response);
+                ui.printResponse(response);
 
             } catch (Exception e) {
-                UI.printError(e);
+                ui.printError(e);
             }
 
-            userQuery = UI.getUserQuery();
+            userQuery = ui.getUserQuery();
         }
     }
 }

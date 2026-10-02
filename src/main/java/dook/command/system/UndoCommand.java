@@ -1,17 +1,15 @@
 package dook.command.system;
 
-import java.util.List;
 import java.util.Deque;
-import java.util.Random;
 import java.util.Optional;
-import java.util.Collection;
-import java.util.regex.Pattern;
+import java.util.Random;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dook.command.Command;
 import dook.command.Response;
-import dook.service.TaskManager;
 import dook.exception.EmptyCommandLogException;
+import dook.service.TaskManager;
 
 /**
  * Represents the command for undoing the previous commands.

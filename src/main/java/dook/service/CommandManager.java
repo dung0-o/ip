@@ -1,42 +1,38 @@
 package dook.service;
 
-import java.util.List;
-import java.util.Deque;
-import java.util.Random;
-import java.util.Optional;
 import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import dook.command.Command;
 import dook.command.Response;
-
-import dook.command.task.AddTaskCommand;
-import dook.command.task.DeleteCommand;
-import dook.command.task.DeleteAllCommand;
-import dook.command.task.DeleteExpiredCommand;
-import dook.command.task.FindCommand;
-import dook.command.task.ListCommand;
-import dook.command.task.MarkCommand;
-import dook.command.task.UnmarkCommand;
-
-import dook.command.time.CalendarCommand;
-import dook.command.time.DateCommand;
-import dook.command.time.TodayCommand;
-
 import dook.command.system.EmptyCommand;
 import dook.command.system.ErrorCommand;
 import dook.command.system.ExitCommand;
 import dook.command.system.GreetCommand;
 import dook.command.system.HelpCommand;
 import dook.command.system.UndoCommand;
-
-import dook.parser.Parser;
+import dook.command.task.AddTaskCommand;
+import dook.command.task.DeleteAllCommand;
+import dook.command.task.DeleteCommand;
+import dook.command.task.DeleteExpiredCommand;
+import dook.command.task.FindCommand;
+import dook.command.task.ListCommand;
+import dook.command.task.MarkCommand;
+import dook.command.task.UnmarkCommand;
+import dook.command.time.CalendarCommand;
+import dook.command.time.DateCommand;
+import dook.command.time.TodayCommand;
 import dook.exception.UnknownCommandException;
+import dook.parser.Parser;
 
 /**
  * Manages the processing of user inputs.
  */
 public class CommandManager {
-    private final List<Parser<Command>> PARSERS = List.of(
+    private static final List<Parser<Command>> PARSERS = List.of(
         GreetCommand::parse,
         ExitCommand::parse,
         EmptyCommand::parse,

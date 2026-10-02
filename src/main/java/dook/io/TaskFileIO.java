@@ -1,12 +1,11 @@
 package dook.io;
 
-import java.util.List;
-import java.util.Arrays;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import java.nio.file.Path;
 
 import dook.io.loader.Loader;
 import dook.io.loader.TaskLoader0;
@@ -31,7 +30,7 @@ public class TaskFileIO extends FileIO {
         TaskMigrator0::migrate
     );
 
-    private static final Logger LOGGER =
+    private static final Logger logger =
         Logger.getLogger(TaskFileIO.class.getName());
 
     /**
@@ -73,14 +72,14 @@ public class TaskFileIO extends FileIO {
                                           .map(Object::getClass)
                                           .toArray(size -> new Class<?>[size]);
             try {
-                Task task = (Task) data.getKlass()
+                Task task = (Task) data.getClassType()
                                        .getConstructor(paramTypes)
                                        .newInstance(constructorArgs);
                 task.setDone((Boolean) details.get(0));
                 tasks.add(task);
 
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Local task file corrupted.", e);
+                logger.log(Level.SEVERE, "Local task file corrupted.", e);
                 return new ArrayList<>();
             }
         }

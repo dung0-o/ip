@@ -1,8 +1,8 @@
 package dook.io;
 
-import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -11,17 +11,17 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 public class SerialisedData {
     private static final String DELIMITER = "|";
-    private Class<?> klass;
+    private Class<?> classType;
     private List<?> details;
 
     /**
      * Constructs a new SerialisedData with the given class and details.
      *
-     * @param klass The class of the serialised object.
+     * @param classType The class of the serialised object.
      * @param args  The details of the serialised object.
      */
-    public SerialisedData(Class<?> klass, Object... args) {
-        this.klass = klass;
+    public SerialisedData(Class<?> classType, Object... args) {
+        this.classType = classType;
         details = new ArrayList<>(Arrays.asList(args));
     }
 
@@ -52,8 +52,8 @@ public class SerialisedData {
      *
      * @return The class of the serialised object.
      */
-    public Class<?> getKlass() {
-        return klass;
+    public Class<?> getClassType() {
+        return classType;
     }
 
     /**
@@ -75,6 +75,6 @@ public class SerialisedData {
         String detailsString = details.stream()
                                       .map(String::valueOf)
                                       .collect(Collectors.joining(DELIMITER));
-        return klass.getName() + DELIMITER + detailsString;
+        return classType.getName() + DELIMITER + detailsString;
     }
 }

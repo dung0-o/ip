@@ -1,9 +1,9 @@
 package dook.task;
 
-import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Represents a basic task.
@@ -48,7 +48,7 @@ public class ToDoTask extends Task {
      */
     @Override
     public String toStringWithTime() {
-        return PADDING_FOR_TIME_SLOT.repeat(2) + super.toString();
+        return paddingForTimeSlot.repeat(2) + super.toString();
     }
 
     /**

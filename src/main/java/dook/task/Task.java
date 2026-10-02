@@ -1,13 +1,9 @@
 package dook.task;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.ArrayList;
-import java.util.regex.Matcher;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import dook.io.SerialisedData;
 
@@ -15,10 +11,11 @@ import dook.io.SerialisedData;
  * Represents the template for all tasks.
  */
 public abstract class Task implements Comparable<Task> {
-    private static final String TIME_PATTERN = "HH:mm";
-    protected final String PADDING_FOR_TIME_SLOT = " ".repeat(TIME_PATTERN.length() + 1);
-    protected final DateTimeFormatter TIME_FORMATTER =
-        DateTimeFormatter.ofPattern(TIME_PATTERN, Locale.UK);
+    private static final String TIME_SLOT_PATTERN = "HH:mm";
+
+    protected final String paddingForTimeSlot = " ".repeat(TIME_SLOT_PATTERN.length() + 1);
+    protected final DateTimeFormatter TimeSlotFormatter =
+        DateTimeFormatter.ofPattern(TIME_SLOT_PATTERN, Locale.UK);
 
     private String description;
     private boolean isDone;

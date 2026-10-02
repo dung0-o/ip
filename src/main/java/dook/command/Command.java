@@ -3,8 +3,6 @@ package dook.command;
 import java.util.Deque;
 import java.util.Random;
 
-import dook.command.Command;
-import dook.command.Response;
 import dook.service.TaskManager;
 
 /**

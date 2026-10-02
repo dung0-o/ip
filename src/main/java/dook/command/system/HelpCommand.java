@@ -1,12 +1,12 @@
 package dook.command.system;
 
-import java.util.List;
-import java.util.Deque;
-import java.util.Random;
-import java.util.Optional;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
+import java.util.Deque;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dook.command.Command;
 import dook.command.Response;
@@ -20,15 +20,15 @@ public class HelpCommand extends Command {
 
     private static final Pattern PATTERN = Pattern.compile("^help$");
     private static final List<Pair> COMMAND_DESCRIPTIONS = new ArrayList<>(List.of(
-        new Pair("bye",             "Exit this nightmare."),
         new Pair("help",            "Show this list of commands."),
+        new Pair("bye",             "Exit this nightmare."),
         new Pair("list",            "View your overwhelmingly long task list."),
         new Pair("todo [PHRASE]",   "Add a to-do task on to your already long list."),
 
-        new Pair("deadline [PHRASE] /by [PHRASE]",
+        new Pair("deadline [PHRASE] /by [DATE]",
                     "Add a deadline task, then procrastinate."),
 
-        new Pair("event [PHRASE] /from [PHRASE] /to [PHRASE]",
+        new Pair("event [PHRASE] /from [DATE] /to [DATE]",
                     "Add an event task that you will surely bail out last minute."),
 
         new Pair("mark [NUMBER]",   "Lie to yourself that the task is done."),

@@ -1,18 +1,15 @@
 package dook.io.migrator;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ArrayList;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.time.LocalDateTime;
-
-import dook.task.ToDoTask;
-import dook.task.DeadlineTask;
-import dook.task.EventTask;
 
 import dook.io.SerialisedData;
 import dook.parser.DateTimeParser;
+import dook.task.DeadlineTask;
+import dook.task.EventTask;
+import dook.task.ToDoTask;
 
 /**
  * Migrates task serialised data from version 0 to version 1.
@@ -29,14 +26,14 @@ public class TaskMigrator0 {
     public static List<SerialisedData> migrate(List<SerialisedData> content) {
         List<SerialisedData> newContent = new ArrayList<>();
         for (SerialisedData data : content) {
-            Class<?> klass = data.getKlass();
+            Class<?> classType = data.getClassType();
             List<?> details = data.getDetails();
             SerialisedData newData;
 
-            if (klass == DeadlineTask.class) {
+            if (classType == DeadlineTask.class) {
                 newData = parseOldDeadlineTask(details);
 
-            } else if (klass == EventTask.class) {
+            } else if (classType == EventTask.class) {
                 newData = parseOldEventTask(details);
 
             } else {

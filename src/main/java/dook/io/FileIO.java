@@ -1,21 +1,18 @@
 package dook.io;
 
-import java.io.IOException;
-import java.io.BufferedWriter;
 import java.io.BufferedReader;
-
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
-
-import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalInt;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dook.io.loader.Loader;
 import dook.io.migrator.Migrator;
@@ -31,7 +28,7 @@ public abstract class FileIO {
     private static final Pattern VERSION_PATTERN =
         Pattern.compile(VERSION_KEY + "(\\d+)");
 
-    private static final Logger LOGGER =
+    private static final Logger logger =
         Logger.getLogger(FileIO.class.getName());
 
     private Path dataDir;
@@ -61,7 +58,7 @@ public abstract class FileIO {
             }
 
         } catch (IOException e) {
-            LOGGER.log(
+            logger.log(
                 Level.WARNING,
                 "File %s is missing and cannot be created".formatted(fileName),
                 e
@@ -95,7 +92,7 @@ public abstract class FileIO {
             return true;
 
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Cannot write to file " + fileName, e);
+            logger.log(Level.WARNING, "Cannot write to file " + fileName, e);
         }
         return false;
     }
@@ -124,7 +121,7 @@ public abstract class FileIO {
             }
             return lines;
         } catch (IOException e) {
-            LOGGER.log(
+            logger.log(
                 Level.WARNING,
                 "Cannot read from file " + file.getFileName().toString(),
                 e
@@ -145,7 +142,7 @@ public abstract class FileIO {
             if (matcher.matches()) {
                 int dataVersion = Integer.parseInt(matcher.group(1));
                 if (dataVersion > appVersion) {
-                    LOGGER.warning("App serialisation version is outdated to read data.");
+                    logger.warning("App serialisation version is outdated to read data.");
                     return OptionalInt.empty();
                 }
 
@@ -153,7 +150,7 @@ public abstract class FileIO {
             }
         }
 
-        LOGGER.warning("No serialisation version found, skipping loading the data.");
+        logger.warning("No serialisation version found, skipping loading the data.");
         return OptionalInt.empty();
     }
 
@@ -192,7 +189,7 @@ public abstract class FileIO {
 
         for (int version = dataVersion; version < appVersion; version++) {
             content = migrators.get(version).migrate(content);
-            LOGGER.info("Migrating data from version %d to %d.".formatted(
+            logger.info("Migrating data from version %d to %d.".formatted(
                 version, version + 1
             ));
         }

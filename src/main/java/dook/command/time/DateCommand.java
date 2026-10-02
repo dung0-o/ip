@@ -1,22 +1,22 @@
 package dook.command.time;
 
-import java.util.List;
-import java.util.Deque;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Deque;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import dook.task.Task;
 import dook.command.Command;
 import dook.command.Response;
-import dook.service.TaskManager;
 import dook.parser.DateTimeParser;
+import dook.service.TaskManager;
+import dook.task.Task;
 
 /**
  * Represents the command for listing tasks on a specified date.

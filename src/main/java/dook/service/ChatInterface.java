@@ -10,10 +10,11 @@ import dook.command.Response;
  * Handles taking the user inputs and printing the responses.
  */
 public class ChatInterface {
-    private final int BAR_LENGTH = 72;
-    private final String DIVIDER = "_".repeat(BAR_LENGTH) + "\n\n> ";
-    private final Scanner SCANNER = new Scanner(System.in);
-    private final Logger LOGGER = Logger.getLogger(ChatInterface.class.getName());
+    private static final int BAR_LENGTH = 72;
+    private static final String DIVIDER = "_".repeat(BAR_LENGTH) + "\n\n> ";
+
+    private final Scanner scanner = new Scanner(System.in);
+    private final Logger logger = Logger.getLogger(ChatInterface.class.getName());
 
     /**
      * Formats and prints the response answering user input.
@@ -41,7 +42,7 @@ public class ChatInterface {
             Check the logs.
             """
         );
-        LOGGER.log(Level.WARNING, "Unchecked exception caught.", e);
+        logger.log(Level.WARNING, "Unchecked exception caught.", e);
         System.out.print(DIVIDER);
     }
 
@@ -51,6 +52,6 @@ public class ChatInterface {
      * @return Trimmed user input.
      */
     public String getUserQuery() {
-        return SCANNER.nextLine().trim();
+        return scanner.nextLine().trim();
     }
 }

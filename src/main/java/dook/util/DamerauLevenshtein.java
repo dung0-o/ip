@@ -6,13 +6,14 @@
  * License: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
  * (https://creativecommons.org/licenses/by-sa/4.0/)
  *
- * Changes: Implemented the algorithm in Java.
+ * Changes: Implemented the algorithm in Java,
+ * added cache to reduce computation cost for repeated search.
  */
 
 package dook.util;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides fuzzy string matching using the optimal string alignment distance.

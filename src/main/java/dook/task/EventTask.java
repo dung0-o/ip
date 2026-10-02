@@ -1,14 +1,12 @@
 package dook.task;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dook.io.SerialisedData;
 import dook.parser.DateTimeParser;
@@ -123,8 +121,8 @@ public class EventTask extends Task {
      */
     @Override
     public String toStringWithTime() {
-        return startDatetime.format(TIME_FORMATTER)
-                + "-" + endDatetime.format(TIME_FORMATTER)
+        return startDatetime.format(TimeSlotFormatter)
+                + "-" + endDatetime.format(TimeSlotFormatter)
                 + " " + super.toString();
     }
 

@@ -1,19 +1,19 @@
 package dook.command.task;
 
-import java.util.List;
 import java.util.Deque;
-import java.util.Random;
+import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
+import java.util.Random;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-import dook.task.Task;
 import dook.command.Command;
 import dook.command.Response;
-import dook.service.TaskManager;
-import dook.util.DamerauLevenshtein;
 import dook.exception.EmptyTaskListException;
+import dook.service.TaskManager;
+import dook.task.Task;
+import dook.util.DamerauLevenshtein;
 
 /**
  * Represents the command for searching tasks by fuzzy description matching.

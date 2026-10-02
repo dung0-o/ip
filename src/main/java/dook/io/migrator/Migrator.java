@@ -10,11 +10,11 @@ import dook.io.SerialisedData;
  */
 public interface Migrator {
 
-	/**
-	 * Modifies the serialised data.
-	 *
-	 * @param  content The serialised data in outdated format.
-	 * @return         The updated serialised data.
-	 */
-	List<SerialisedData> migrate(List<SerialisedData> content);
+    /**
+     * Modifies the serialised data.
+     *
+     * @param  content The serialised data in outdated format.
+     * @return         The updated serialised data.
+     */
+    List<SerialisedData> migrate(List<SerialisedData> content);
 }

@@ -1,11 +1,9 @@
 package dook.service;
 
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -21,7 +19,7 @@ public class FileManager {
     private static final int APP_SERIALISATION_VERSION = 1;
     private static final Path LOG_DIR = Paths.get("logs");
     private static final String LOG_FILENAME = "logs/dook.log";
-    private static final Logger LOGGER =
+    private static final Logger logger =
         Logger.getLogger(FileManager.class.getName());
 
     private static Logger rootLogger = Logger.getLogger("");
@@ -34,7 +32,7 @@ public class FileManager {
      * @param  dataDirName Relative path of the data directory.
      */
     public FileManager(String dataDirName) {
-        configLogger();
+        configureLogger();
 
         Path dataDir = Paths.get(dataDirName);
 
@@ -44,7 +42,7 @@ public class FileManager {
             }
 
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Data folder is missing and cannot be created.", e);
+            logger.log(Level.SEVERE, "Data folder is missing and cannot be created.", e);
         }
 
         taskFileIO = new TaskFileIO(dataDir, APP_SERIALISATION_VERSION);
@@ -62,7 +60,7 @@ public class FileManager {
     /**
      * Configures the root logger to write to the log file.
      */
-    private static void configLogger() {
+    private static void configureLogger() {
         for (Handler handler : rootLogger.getHandlers()) {
             rootLogger.removeHandler(handler);
             handler.close();

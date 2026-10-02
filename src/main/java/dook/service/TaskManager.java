@@ -1,27 +1,25 @@
 package dook.service;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.time.LocalDate;
-
-import dook.task.Task;
-import dook.task.DeadlineTask;
-import dook.task.EventTask;
-import dook.task.ToDoTask;
-
-import dook.io.TaskFileIO;
-import dook.parser.Parser;
+import java.util.List;
+import java.util.Optional;
 
 import dook.exception.UnknownTaskException;
 import dook.exception.TaskListIndexOutOfBoundsException;
+import dook.io.TaskFileIO;
+import dook.parser.Parser;
+import dook.task.DeadlineTask;
+import dook.task.EventTask;
+import dook.task.Task;
+import dook.task.ToDoTask;
 
 /**
  * Manages the modification and viewing of the task list.
  */
 public class TaskManager {
-    private final List<Parser<Task>> PARSERS = List.of(
+    private static final List<Parser<Task>> PARSERS = List.of(
         ToDoTask::parse,
         DeadlineTask::parse,
         EventTask::parse

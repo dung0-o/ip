@@ -1,8 +1,8 @@
 package dook.command.task;
 
 import java.util.Deque;
-import java.util.Random;
 import java.util.Optional;
+import java.util.Random;
 
 import dook.command.Command;
 import dook.command.Response;
